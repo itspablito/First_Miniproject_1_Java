@@ -1,6 +1,7 @@
 public class Soldado {
-    String nombresoldado;
-    String ID;
+
+    private String nombresoldado;
+    private String ID;
 
     public Soldado(String nombresoldado, String ID) {
         this.nombresoldado = nombresoldado;

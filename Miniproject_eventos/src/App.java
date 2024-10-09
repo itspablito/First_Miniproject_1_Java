@@ -4,8 +4,10 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("hi, World!");
-
         Scanner Scanner = new Scanner(System.in);
+
+        ////////////////////Soldado////////////////////////
+  
         String nombre = Scanner.nextLine();
 
         String ID = Scanner.nextLine();
@@ -14,13 +16,17 @@ public class App {
         int rango = Scanner.nextInt();
 
 
-        Soldado soldado1 = new Soldado(nombre, ID);      
-        Rango rango1 = new Rango(rango);
+        Soldado soldado1 = new Soldado(nombre, ID);  
+        
+        ////////////////////Rango////////////////////////
+        Rango rango1 = new Rango();
 
         soldado1.mostrardatos();
 
+        rango1.AsignarRango(rango);
+        //System.out.println(rango1.rango);
         
-        System.out.println(rango1.rango);         
+        Scanner.close();
         
     }
 }

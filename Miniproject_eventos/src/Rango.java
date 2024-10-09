@@ -1,12 +1,8 @@
 public class Rango { 
-    int rango;
-    
+    private int rango;
 
-    public Rango(int rango) {
-        setRango(rango);
-    }
 
-    public void setRango(int rango) {
+    public void AsignarRango(int rango) {
         if (rango == 1) {
             System.out.println("EL Rango del Soldado es: SoldadoRaso");
         } else if (rango == 2) {
@@ -19,7 +15,14 @@ public class Rango {
 
 
     }
+     
+    public void setRango(int nuevoRango) {
+        rango = nuevoRango;
+    }
 
+    public int getRango() {
+        return rango;
+    }
 
 
 
