@@ -1,11 +1,15 @@
+package Soldado_Principal;
+
+
 public class Soldado {
 
-    private String nombresoldado;
-    private String ID;
+    public String nombresoldado;
+    public String ID;
 
-    public Soldado(String nombresoldado, String ID) {
+    public Soldado(String nombresoldado,String ID) {
         this.nombresoldado = nombresoldado;
         this.ID = ID;
+    
     }
 
     public void mostrardatos() {
