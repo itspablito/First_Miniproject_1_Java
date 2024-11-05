@@ -22,12 +22,10 @@ public class App {
         Soldado soldado1 = new Soldado(nombre, ID);  
         
         ////////////////////Rango////////////////////////
-        Rango rango1 = new Rango();
 
         soldado1.mostrardatos();
 
-        rango1.AsignarRango(rango);
-        //System.out.println(rango1.rango);
+   
         
         Scanner.close();
         
