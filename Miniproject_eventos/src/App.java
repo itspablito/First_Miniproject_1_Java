@@ -4,11 +4,6 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("hi, World!");
-<<<<<<< HEAD
-
-        SoldadoRaso soldado1 = new SoldadoRaso("Juan", 1);
-        
-=======
         Scanner Scanner = new Scanner(System.in);
 
         ////////////////////Soldado////////////////////////
@@ -32,7 +27,6 @@ public class App {
         //System.out.println(rango1.rango);
         
         Scanner.close();
->>>>>>> 3f78a86b33955c5ff2aa11a6477cf855bd221b71
         
     }
 
