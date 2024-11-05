@@ -4,11 +4,7 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("hi, World!");
-<<<<<<< HEAD
 
-        SoldadoRaso soldado1 = new SoldadoRaso("Juan", 1);
-        
-=======
         Scanner Scanner = new Scanner(System.in);
 
         ////////////////////Soldado////////////////////////
