@@ -15,7 +15,7 @@ public class Rango {
 
 
     }
-     
+        
     public void setRango(int nuevoRango) {
         rango = nuevoRango;
     }
