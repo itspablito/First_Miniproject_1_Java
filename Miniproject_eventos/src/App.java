@@ -22,6 +22,10 @@ public class App {
         Soldado soldado1 = new Soldado(nombre, ID);  
         
         ////////////////////Rango////////////////////////
+        
+        Rango Rango = new Rango(rango);
+
+
 
         soldado1.mostrardatos();
 

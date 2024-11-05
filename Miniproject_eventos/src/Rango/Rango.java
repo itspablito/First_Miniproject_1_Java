@@ -1,7 +1,6 @@
 package Rango;
 
-public abstract class Rango { 
-
+public class Rango { 
     protected int nivel;
 
     public Rango(int nivel) {
