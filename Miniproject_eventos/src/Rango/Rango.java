@@ -1,14 +1,13 @@
 package Rango;
+public abstract class Rango {
 
-public class Rango { 
-    protected int nivel;
+    private int rango;
 
-    public Rango(int nivel) {
-        this.nivel = nivel;
-    }
-
-    public int getRango() {
-        return nivel;
-    }
+    public Rango(int rango) {
+        this.rango = rango;
+        }
+    
+        public abstract void realizarAccion();{
+        }
 }
 
