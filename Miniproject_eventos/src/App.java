@@ -47,7 +47,7 @@ public class App {
         private static void crearSoldado(Scanner scanner) {
             System.out.print("Introduzca Nombre : ");
             String name = scanner.next();
-            System.out.print("Rangos:\nSoldadoRaso (1)\nCapitan (2)\nCoronel (3)\nTeniente (4)\nIntroduzca Rango: ");
+            System.out.print("Rangos:\n(1)SoldadoRaso \n(2)Capitan \n(3)Coronel \n(4)Teniente \nIntroduzca Rango: ");
             int rango = scanner.nextInt();
             scanner.nextLine();
             System.out.println("Introduzca ID : ");
@@ -82,8 +82,8 @@ public class App {
                 System.out.print("Introducir nuevo rango: ");
                 int nuevoRango = scanner.nextInt();
 
-                soldado.setNombresoldado(nuevoNombre);;
-                soldado.setRango(nuevoRango);;;
+                soldado.setNombresoldado(nuevoNombre);
+                soldado.setRango(nuevoRango);
                 System.out.println("Soldado actualizado.");
             } else {
                 System.out.println("ID invalido");

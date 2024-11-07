@@ -3,11 +3,17 @@ import Interfaz.OperacionesMilitares;
 import Rango.Rango;
 
 public class Capitan extends Rango implements OperacionesMilitares{
+    
    //private int soldadosbajosumando;
-
-    public Capitan(int nivel) {
-        super(nivel);
+    public Capitan(int rango) {
+        super(rango);
+        if (rango == 2) {
+            System.out.println("Soy un Capitan");
+        } else {
+            System.out.println("No soy un Capitan");
+        }
     }
+    
     public void mostrarRango() {
         System.out.println("Rango: Capitan");
     
