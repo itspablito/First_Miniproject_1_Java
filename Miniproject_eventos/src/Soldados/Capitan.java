@@ -3,8 +3,7 @@ import Interfaz.OperacionesMilitares;
 import Rango.Rango;
 
 public class Capitan extends Rango implements OperacionesMilitares{
-   private int soldadosbajosumando;
-
+   //private int soldadosbajosumando;
 
     public Capitan(int nivel) {
         super(nivel);
@@ -14,7 +13,7 @@ public class Capitan extends Rango implements OperacionesMilitares{
     
     }
 
-    public void soldadosbajosumando() {
+    public void soldadosbajosumando(int SoldadosCoronel){
         System.out.println("Soldados bajos sumando");
         //this.SoldadosCoronel = soldadosbajosumando;
     }
@@ -34,6 +33,8 @@ public class Capitan extends Rango implements OperacionesMilitares{
     public void reportarEstado() {
         System.out.println("Reportando Estado");
     }
+
+
     
 
 }

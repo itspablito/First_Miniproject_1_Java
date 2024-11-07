@@ -5,9 +5,10 @@ public abstract class Rango {
 
     public Rango(int rango) {
         this.rango = rango;
-        }
-    
-        public abstract void realizarAccion();{
-        }
+    }
+    public int getRango() {
+        return rango;
+    }
+    public abstract void realizarAccion();{
+    }
 }
-
