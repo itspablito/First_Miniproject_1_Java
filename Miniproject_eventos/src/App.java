@@ -63,9 +63,19 @@ public class App {
 ///////////////////////////////////LECTURA DE SOLDADOS //////////////////////////////////////////
         
         private static void leerSoldado(Scanner scanner) {
+            System.out.println("///////////////////Lista de Soldados///////////////////");
             for (int i = 0; i < soldados.size(); i++) {
                 SoldadoRaso soldado = soldados.get(i);
-                System.out.println("///////// Soldados Actuales //////////\nID: " + soldado.getID() + " \nNombre: " + soldado.getNombresoldado() + " \nRango: " + soldado.getRango() + "\n-----------------------------------");
+                System.out.println("\nID: " + soldado.getID() + " \nNombre: " + soldado.getNombresoldado() );
+
+                switch (soldado.getRango()) {
+                    case 1 -> System.out.println("Rango: Soldado Raso");
+                    case 2 -> System.out.println("Rango: Capitán");
+                    case 3 -> System.out.println("Rango: Coronel");
+                    case 4 -> System.out.println("Rango: Teniente");
+                    
+                }
+                System.out.println("__________________");
             }
         }
 ///////////////////////////////////ACTUALIZACION DE SOLDADOS //////////////////////////////////////////
@@ -85,26 +95,30 @@ public class App {
                 soldado.setNombresoldado(nuevoNombre);
                 soldado.setRango(nuevoRango);
                 System.out.println("Soldado actualizado.");
-            } else {
+            } 
+            else {
                 System.out.println("ID invalido");
             }
         }
 ///////////////////////////////////BORRAR SOLDADOS //////////////////////////////////////////
 
+private static void borrarSoldado(Scanner scanner) {
 
-        private static void borrarSoldado(Scanner scanner) {
-            System.out.print("Introduzca id del soldado:: ");
-            int index = scanner.nextInt();
+    System.out.print("Introduzca el ID del soldado: ");
+    int id = scanner.nextInt();
+    boolean encontrado = false;
+    for (int i = 0; i < soldados.size(); i++) {
 
-                if (index >= 0 && index < soldados.size()) {
-                    soldados.remove(index);
-                    System.out.println("Soldado borrado.");
-                } 
-                else {
-                    System.out.println("ID invalido");
-                    }
-            
-            
+        if (soldados.get(i).getID() == id) {  
+            soldados.remove(i);
+            System.out.println("Soldado borrado.");
+            encontrado = true;
+            break;
+        }
+        else if (encontrado == false) {
+            System.out.println("ID invalido");
+        }
+    }
             }
 /////////////////////////////////////////////////////////////////////////////    
 
