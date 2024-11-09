@@ -1,17 +1,17 @@
 package Soldados;
-import Rango.Rango;
 import Interfaz.OperacionesMilitares;
+import Soldado_Principal.Soldado;
 
-public class Teniente extends Rango implements OperacionesMilitares { 
-    private String unidad;
+public class Teniente extends Soldado implements OperacionesMilitares { 
+    private int unidad;
 
-    public Teniente(int rango) {
-        super(3); 
+    public Teniente(String nombredelsoldado, int ID, int rango, int unidad) {
+        super(nombredelsoldado, ID, rango);
+        this.unidad = unidad; 
         System.out.println("Teniente");
+    
     }
-    public void mostrarUnidad(String unidad){
-        this.unidad = unidad;
-    }
+
     public void mostrarRango() {
         System.out.println("Rango: Teniente");
     }
@@ -21,8 +21,8 @@ public class Teniente extends Rango implements OperacionesMilitares {
     }
 
     @Override
-    public void realizarAccion() {
-        System.out.println("Realizando Accion");
+    public String toString() {
+        return super.toString() + "Teniente" + "\nUnidad=" + unidad;
     }
 
     @Override

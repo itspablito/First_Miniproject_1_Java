@@ -1,10 +1,14 @@
 import java.util.Scanner;
-import Soldados.SoldadoRaso;
 import java.util.ArrayList;
 import java.util.List;
-    
+import Soldado_Principal.Soldado;
+import Soldados.*;
+import Interfaz.*;
+
 public class App {
-        private static List<SoldadoRaso> soldados = new ArrayList<>();
+        private static ArrayList<Soldado> soldados = new ArrayList<>();
+
+        
 
         public static void main(String[] args) throws Exception {
             Scanner scanner = new Scanner(System.in);
@@ -46,60 +50,89 @@ public class App {
 
         private static void crearSoldado(Scanner scanner) {
             System.out.print("Introduzca Nombre : ");
-            String name = scanner.next();
-            System.out.print("Rangos:\n(1)SoldadoRaso \n(2)Capitan \n(3)Coronel \n(4)Teniente \nIntroduzca Rango: ");
+            String nombre = scanner.next();
+            System.out.print("Rangos:\n(1)SoldadoRaso \n(2)Teniente \n(3)Capitan \n(4)Coronel \nIntroduzca Rango: ");
             int rango = scanner.nextInt();
             scanner.nextLine();
             System.out.println("Introduzca ID : ");
             int ID = scanner.nextInt();
             scanner.nextLine();
 
+            switch (rango) {
+                case 1:
+                    SoldadoRaso soldado = new SoldadoRaso(nombre, ID, rango);
+                    soldados.add(soldado);
+                    break;
+                case 2:
+                    System.out.print("Introduzca la unidad: ");
+                    int unidad = scanner.nextInt();
+                    Teniente teniente = new Teniente(nombre, ID, rango,unidad);
+                    soldados.add(teniente); 
+                    break;               
+                case 3:
+                    System.out.print("Introduzca el numero de soldados bajo su mando: ");
+                    int soldadosbajosumando = scanner.nextInt();
+                    Capitan capitan = new Capitan(nombre, ID, rango, soldadosbajosumando);
+                    soldados.add(capitan);
+                    break;
+                case 4:
+                    System.out.print("Introduzca la estrategia militar: ");
+                    String EstrategiaMilitar = scanner.nextLine();
+                    Coronel coronel = new Coronel(nombre, ID, rango, EstrategiaMilitar);
+                    soldados.add(coronel);
+                    break;
+                default:
+                    break;
+     
+            }
 
-            SoldadoRaso soldado = new SoldadoRaso(name, ID, rango);
-            soldados.add(soldado);
             System.out.println("Soldado creado");
         }
 
 ///////////////////////////////////LECTURA DE SOLDADOS //////////////////////////////////////////
         
         private static void leerSoldado(Scanner scanner) {
-            System.out.println("///////////////////Lista de Soldados///////////////////");
-            for (int i = 0; i < soldados.size(); i++) {
-                SoldadoRaso soldado = soldados.get(i);
-                System.out.println("\nID: " + soldado.getID() + " \nNombre: " + soldado.getNombresoldado() );
-
-                switch (soldado.getRango()) {
-                    case 1 -> System.out.println("Rango: Soldado Raso");
-                    case 2 -> System.out.println("Rango: Capitán");
-                    case 3 -> System.out.println("Rango: Coronel");
-                    case 4 -> System.out.println("Rango: Teniente");
-                    
-                }
-                System.out.println("__________________");
-            }
+            if (soldados.size() == 0)   {
+                System.out.println("°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°");
+                System.out.println("|        No hay soldados        |");
+                System.out.println("°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°");
+                return;
+            }else {
+                System.out.println("/////////////////////Lista de Soldados//////////////////");
+                for (int i = 0; i < soldados.size(); i++) {
+                    System.out.println(soldados.get(i));
+                    System.out.println("-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-");
+                    } 
+            }  
         }
 ///////////////////////////////////ACTUALIZACION DE SOLDADOS //////////////////////////////////////////
 
 
-        private static void actSoldado(Scanner scanner) {
-            System.out.print(" Introduzca ID del soldado : ");
-            int index = scanner.nextInt();
-
-            if (index >= 0 && index < soldados.size()) {
-                SoldadoRaso soldado = soldados.get(index);
-                System.out.print("Introducir nuevo nombre: ");
-                String nuevoNombre = scanner.next();
-                System.out.print("Introducir nuevo rango: ");
-                int nuevoRango = scanner.nextInt();
-
-                soldado.setNombresoldado(nuevoNombre);
-                soldado.setRango(nuevoRango);
-                System.out.println("Soldado actualizado.");
-            } 
-            else {
-                System.out.println("ID invalido");
+    private static void actSoldado(Scanner scanner) {
+        System.out.print("Introduzca ID del soldado : ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        
+        Soldado soldado = null;
+        for (Soldado s : soldados) {
+            if (s.getID() == id) {
+                soldado = s;
+                break;
             }
         }
+        if (soldado != null) {
+            System.out.print("Introducir nuevo nombre: ");
+            String nuevoNombre = scanner.next();
+            System.out.print("Introducir nuevo rango: ");
+            int nuevoRango = scanner.nextInt();
+            soldado.setNombresoldado(nuevoNombre);
+            soldado.setRango(nuevoRango);
+            System.out.println("Soldado actualizado.");
+        } else {
+            System.out.println("ID invalido");
+        }
+    }
+
 ///////////////////////////////////BORRAR SOLDADOS //////////////////////////////////////////
 
 private static void borrarSoldado(Scanner scanner) {
@@ -120,7 +153,7 @@ private static void borrarSoldado(Scanner scanner) {
         }
     }
             }
-/////////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////OPERACIONES MILITARES////////////////////////////////////////    
 
     private static void misiones(Scanner scanner) {
         System.out.println("Gestion de Misiones");
@@ -132,19 +165,20 @@ private static void borrarSoldado(Scanner scanner) {
         System.out.print("Introduzca id del soldado: ");
         int index = scanner.nextInt();
         if (index >= 0 && index < soldados.size()) {
-        SoldadoRaso soldado = soldados.get(index);
+        Soldado soldado = soldados.get(index);
         switch (opcion) {
             case 1:
                 if (soldado.getRango() == 1) {
-                    System.out.println("El soldado raso no puede hacer misiones");
+                    System.out.println(soldados.get(index));
+                    System.out.println("-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-");
+                    System.out.println("Introduzca la mision a asignar: ");
+                    String mision = scanner.nextLine();
                 } else {
                     System.out.println("Introduzca la mision a asignar: ");
                     String mision = scanner.nextLine();
-                    soldado.asignarMision(mision);
                 }
                 break;
             case 2:
-                soldado.reportarEstado();
                 break;
             case 3:
                 break;
@@ -161,4 +195,3 @@ private static void borrarSoldado(Scanner scanner) {
     }
 
 }
-

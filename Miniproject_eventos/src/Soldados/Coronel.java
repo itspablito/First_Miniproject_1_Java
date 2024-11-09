@@ -1,29 +1,27 @@
 package Soldados;
 import Rango.Rango;
 import Interfaz.OperacionesMilitares;
+import Soldado_Principal.Soldado;  
 
-public class Coronel extends Rango  implements OperacionesMilitares{
+public class Coronel extends Soldado implements OperacionesMilitares{
     private String EstrategiaMilitar;
 
 
-    public Coronel(int nivel) {
-        super(3);
+    public Coronel(String nombredelsoldado, int ID, int rango, String EstrategiaMilitar) {
+        super(nombredelsoldado, ID, rango);
+        this.EstrategiaMilitar = EstrategiaMilitar;
         System.out.println("Coronel");
     }
-
-    @Override
-    public void realizarAccion() {
-            System.out.println("Realiza una estrategia militar");
-        }
 
     public void mostrarRango() {
         System.out.println("Rango: Coronel");
     }
     
-    public void mostrarEstrategiaMilitar( String estrategiaMilitar){
-        System.out.println("Estrategia Militar: " + EstrategiaMilitar );
+    @Override
+    public String toString() {
+        return super.toString() + "Coronel" + "\nEstrategia Militar = " + EstrategiaMilitar;
     }
-    
+
     @Override
     public void asignarMision(String mision) {
         System.out.println("Mision: " + mision);

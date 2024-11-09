@@ -12,4 +12,6 @@ public abstract class Rango {
     public abstract void realizarAccion();{
 
     }
+
+    
 }
