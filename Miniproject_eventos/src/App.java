@@ -1,18 +1,13 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.List;
 import Soldado_Principal.Soldado;
 import Soldados.*;
-import Interfaz.*;
 
 public class App {
-        private static ArrayList<Soldado> soldados = new ArrayList<>();
-
-        
-
+        private static ArrayList<Soldado> soldados = new ArrayList<>(); //Arraylist donde se almaceran los distintos soldados creados.
         public static void main(String[] args) throws Exception {
             Scanner scanner = new Scanner(System.in);
-            while (true) {
+            while (true) { //Menu principal donde se elige la opcion a realizar.
                 System.out.println("1. Crear Soldado");
                 System.out.println("2. Leer Soldado");
                 System.out.println("3. Actualizar Soldado");
@@ -22,7 +17,7 @@ public class App {
                 System.out.print("Elija una opción: ");
                 int option = scanner.nextInt();
 
-                switch (option) {
+                switch (option) { //Switch para elegir la opcion a realizar y redirigir a la funcion correspondiente.
                     case 1:
                         crearSoldado(scanner); 
                         break;
@@ -50,36 +45,36 @@ public class App {
 
         private static void crearSoldado(Scanner scanner) {
             System.out.print("Introduzca Nombre : ");
-            String nombre = scanner.next();
+            String nombre = scanner.next();     //Introducir nombre del soldado para guardarlo en el arraylist.
             System.out.print("Rangos:\n(1)SoldadoRaso \n(2)Teniente \n(3)Capitan \n(4)Coronel \nIntroduzca Rango: ");
             int rango = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine();    //Se elige un rango para efectuar dentro de esta misma clase mandar a cual constriuctor se va a dirigir.
             System.out.println("Introduzca ID : ");
             int ID = scanner.nextInt();
             scanner.nextLine();
 
             switch (rango) {
                 case 1:
-                    SoldadoRaso soldado = new SoldadoRaso(nombre, ID, rango);
-                    soldados.add(soldado);
+                    SoldadoRaso soldado = new SoldadoRaso(nombre, ID, rango);//Creacion de un soldado raso. 
+                    soldados.add(soldado); //Se añade el soldado creado previamente al arraylist.
                     break;
                 case 2:
-                    System.out.print("Introduzca la unidad: ");
+                    System.out.print("Introduzca la unidad: ");//Si la creacion es un Teniente se agrega unidad al cradad por medio del constructor.
                     int unidad = scanner.nextInt();
                     Teniente teniente = new Teniente(nombre, ID, rango,unidad);
-                    soldados.add(teniente); 
+                    soldados.add(teniente); //Se añade el teniente al arraylist.
                     break;               
                 case 3:
-                    System.out.print("Introduzca el numero de soldados bajo su mando: ");
+                    System.out.print("Introduzca el numero de soldados bajo su mando: ");//Si la creacion es un Capital se agrega valor a soldadobajosumando por medio del constructor.
                     int soldadosbajosumando = scanner.nextInt();
                     Capitan capitan = new Capitan(nombre, ID, rango, soldadosbajosumando);
-                    soldados.add(capitan);
+                    soldados.add(capitan); //Se añade el capitan al arraylist.
                     break;
                 case 4:
                     System.out.print("Introduzca la estrategia militar: ");
                     String EstrategiaMilitar = scanner.nextLine();
                     Coronel coronel = new Coronel(nombre, ID, rango, EstrategiaMilitar);
-                    soldados.add(coronel);
+                    soldados.add(coronel);  //Se añade el coronel al arraylist.
                     break;
                 default:
                     break;
@@ -92,12 +87,12 @@ public class App {
 ///////////////////////////////////LECTURA DE SOLDADOS //////////////////////////////////////////
         
         private static void leerSoldado(Scanner scanner) {
-            if (soldados.size() == 0)   {
+            if (soldados.size() == 0)   {//Si el Arraylist de soldados esta vacio entonces imprimir "No hay soldados".
                 System.out.println("°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°");
                 System.out.println("|        No hay soldados        |");
                 System.out.println("°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°");
                 return;
-            }else {
+            }else { 
                 System.out.println("/////////////////////Lista de Soldados//////////////////");
                 for (int i = 0; i < soldados.size(); i++) {
                     System.out.println(soldados.get(i));
@@ -168,30 +163,20 @@ private static void borrarSoldado(Scanner scanner) {
         Soldado soldado = soldados.get(index);
         switch (opcion) {
             case 1:
-                if (soldado.getRango() == 1) {
-                    System.out.println(soldados.get(index));
-                    System.out.println("-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-°-");
-                    System.out.println("Introduzca la mision a asignar: ");
-                    String mision = scanner.nextLine();
-                } else {
-                    System.out.println("Introduzca la mision a asignar: ");
-                    String mision = scanner.nextLine();
-                }
+                System.out.print("Introduzca la mision: ");
+                String mision = scanner.nextLine();
+                
                 break;
             case 2:
                 break;
             case 3:
                 break;
             default:
-                break;
-            }
-        }else {
-            System.out.println("ID invalido");
+                System.out.println("Opcion invalida");
         }
+        }   
+       
 
-        //////////////////////////////////////////////////////////
-        
-           
     }
 
 }
