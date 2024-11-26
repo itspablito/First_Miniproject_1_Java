@@ -3,7 +3,7 @@ import Interfaz.OperacionesMilitares;
 import Rango.Rango;
 
 public class Capitan extends Rango implements OperacionesMilitares{
-    
+    //private int SoldadosCoronel;
    //private int soldadosbajosumando;
     public Capitan(int rango) {
         super(rango);
