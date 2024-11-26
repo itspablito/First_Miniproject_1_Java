@@ -17,6 +17,7 @@ public class App {
                 System.out.println("6. Salir");
                 System.out.print("Elija una opción: ");
                 int option = scanner.nextInt();
+6
 
                 switch (option) {
                     case 1:
@@ -66,7 +67,7 @@ public class App {
             System.out.println("///////////////////Lista de Soldados///////////////////");
             for (int i = 0; i < soldados.size(); i++) {
                 SoldadoRaso soldado = soldados.get(i);
-                System.out.println("\nID: " + soldado.getID() + " \nNombre: " + soldado.getNombresoldado() );
+                System.out.println("ID: " + soldado.getID() + " \nNombre: " + soldado.getNombresoldado() );
 
                 switch (soldado.getRango()) {
                     case 1 -> System.out.println("Rango: Soldado Raso");
