@@ -8,8 +8,9 @@ public class SoldadoRaso extends Soldado implements OperacionesMilitares {
         super(nombresoldado, ID, rango);
     }
 
-    public void mostrarRango() {
-        System.out.println("Rango: Soldado Raso");
+    @Override
+    public String toString() {
+        return super.toString() + "Soldado Raso";
     }
 
     @Override

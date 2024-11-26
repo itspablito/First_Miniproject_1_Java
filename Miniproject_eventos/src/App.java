@@ -17,7 +17,7 @@ public class App {
                 System.out.println("6. Salir");
                 System.out.print("Elija una opción: ");
                 int option = scanner.nextInt();
-6
+
 
                 switch (option) {
                     case 1:

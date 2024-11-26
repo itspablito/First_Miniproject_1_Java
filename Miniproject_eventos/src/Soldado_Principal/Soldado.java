@@ -1,6 +1,7 @@
 package Soldado_Principal;
 import Interfaz.OperacionesMilitares;
 
+
 public class Soldado{
 
     public String nombresoldado;
@@ -11,7 +12,11 @@ public class Soldado{
         this.nombresoldado = nombresoldado;
         this.ID = nuevoID;
         this.rango = rango;
-    
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre = " + nombresoldado + " \nID = " + ID + " \nRango = ";
     }
 
     public void mostrardatos() {

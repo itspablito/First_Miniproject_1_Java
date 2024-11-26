@@ -1,33 +1,30 @@
 package Soldados;
 import Interfaz.OperacionesMilitares;
 import Rango.Rango;
+import java.util.ArrayList;
+import Soldado_Principal.Soldado;
 
-public class Capitan extends Rango implements OperacionesMilitares{
-    
-   //private int soldadosbajosumando;
-    public Capitan(int rango) {
-        super(rango);
-        if (rango == 2) {
-            System.out.println("Soy un Capitan");
-        } else {
-            System.out.println("No soy un Capitan");
+public class Capitan extends Soldado implements OperacionesMilitares {
+
+    private int soldadosbajosumando;
+
+
+    public Capitan(String nombredelsoldado, int ID, int rango, int soldadosbajosumando) {
+        super(nombredelsoldado, ID, rango);
+        this.soldadosbajosumando = soldadosbajosumando;
+
         }
-    }
+    
     
     public void mostrarRango() {
         System.out.println("Rango: Capitan");
     
+        
     }
-
-    public void soldadosbajosumando(int SoldadosCoronel){
-        System.out.println("Soldados bajos sumando");
-        //this.SoldadosCoronel = soldadosbajosumando;
-    }
-
 
     @Override
-    public void realizarAccion() {
-        System.out.println("Realizando Accion");
+    public String toString() {
+        return super.toString() + "Capitan" + "\nSoldados bajo su mando=" + soldadosbajosumando ;
     }
 
     @Override
@@ -39,8 +36,7 @@ public class Capitan extends Rango implements OperacionesMilitares{
     public void reportarEstado() {
         System.out.println("Reportando Estado");
     }
-
-
+    
     
 
 }
