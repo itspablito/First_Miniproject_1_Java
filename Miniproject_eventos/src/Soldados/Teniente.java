@@ -1,39 +1,46 @@
 package Soldados;
-import Interfaz.OperacionesMilitares;
 import Soldado_Principal.Soldado;
+import Operaciones_Militares.OperacionesMilitares;
 
 public class Teniente extends Soldado implements OperacionesMilitares { 
-    private int unidad;
+    private String unidad;
 
-    public Teniente(String nombredelsoldado, int ID, int rango, int unidad) {
-        super(nombredelsoldado, ID, rango);
-        this.unidad = unidad; 
-        System.out.println("Teniente");
-    
+  
+    public Teniente(String nombresoldado, int ID, int rango, String unidad) {
+        super(nombresoldado, ID, rango); 
+        this.unidad = unidad;
+        
     }
 
-    public void mostrarRango() {
-        System.out.println("Rango: Teniente");
+    public String getUnidad() {
+        return unidad;
     }
 
-    public void mostrarUnidad() {
-        System.out.println("Unidad: " + unidad);
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
+    }
+
+
+    public void realizarRegaño() {
+        System.out.println("El Teniente " + getNombresoldado() + " está regañando a un soldado en la unidad " + unidad + ".");
     }
 
     @Override
-    public String toString() {
-        return super.toString() + "Teniente" + "\nUnidad=" + unidad;
-    }
+    public void mostrardatos() {
+        super.mostrardatos(); 
+        System.out.println("Unidad del Teniente: " + unidad);
+        System.out.println("Teniete - Nombre: " + getNombresoldado() + ", ID: " + getID() + ", Rango: " + getRango());
+    } 
 
     @Override
     public void asignarMision(String mision) {
-        System.out.println("Mision: " + mision);
+        System.out.println("El Teniente asignó la misión: " + mision);
     }
 
     @Override
     public void reportarEstado() {
-        System.out.println("Reportando Estado");
+    
+    System.out.println("El Teniente reporta que todo está bajo control.");
     }
-    
-    
+
 }

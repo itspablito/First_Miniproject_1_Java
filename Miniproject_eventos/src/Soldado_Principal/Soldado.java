@@ -1,22 +1,31 @@
 package Soldado_Principal;
-import Interfaz.OperacionesMilitares;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Soldado{
 
     public String nombresoldado;
     public final int ID;
     public int rango;
+    private List<String> Tarea;
 
     public Soldado(String nombresoldado, int nuevoID, int rango) {
         this.nombresoldado = nombresoldado;
         this.ID = nuevoID;
         this.rango = rango;
+        this.Tarea = new ArrayList<>();
+    
     }
-
-    @Override
-    public String toString() {
-        return "Nombre = " + nombresoldado + " \nID = " + ID + " \nRango = ";
+    public void asignarMision(String Mision) {
+        Tarea.add(Mision); // Agrega la misión a la lista.
+        System.out.println("Misión '" + Tarea + "' asignada al soldado " + nombresoldado + ".");
+    }
+    public void mostrarMisiones() {
+        if (Tarea.isEmpty()) {
+            System.out.println("El soldado " + nombresoldado + " no tiene misiones asignadas.");
+        } else {
+            System.out.println("Misiones asignadas a " + nombresoldado + ": " + String.join(", ", Tarea));
+        }
     }
 
     public void mostrardatos() {
@@ -45,3 +54,4 @@ public class Soldado{
     }
 
 }
+

@@ -1,6 +1,6 @@
 package Soldados;
 import Soldado_Principal.Soldado;
-import Interfaz.OperacionesMilitares;
+import Operaciones_Militares.OperacionesMilitares;
 
 public class SoldadoRaso extends Soldado implements OperacionesMilitares { 
     
@@ -8,9 +8,8 @@ public class SoldadoRaso extends Soldado implements OperacionesMilitares {
         super(nombresoldado, ID, rango);
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + "Soldado Raso";
+    public void mostrarRango() {
+        System.out.println("Rango: Soldado Raso");
     }
 
     @Override
@@ -20,7 +19,13 @@ public class SoldadoRaso extends Soldado implements OperacionesMilitares {
 
     @Override
     public void reportarEstado() {
-        System.out.println("Reportando Estado");
+        System.out.println("Soldado Raso - Nombre: " + getNombresoldado() + ", ID: " + getID() + ", Rango: " + getRango());
     }
+
+    /*/ @Override
+    public void realizarAccion() {
+        System.out.println( getNombresoldado() + " está siguiendo órdenes como Soldado Raso.");
+    }*/
+    
 
 }

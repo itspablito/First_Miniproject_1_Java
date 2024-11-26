@@ -1,4 +1,4 @@
-package Interfaz;
+package Operaciones_Militares;
 
 public interface OperacionesMilitares {
 
@@ -9,5 +9,4 @@ public interface OperacionesMilitares {
 
 
     
-
 

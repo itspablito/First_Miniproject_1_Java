@@ -1,43 +1,42 @@
 package Soldados;
-import Interfaz.OperacionesMilitares;
-import Rango.Rango;
-import java.util.ArrayList;
+
+import Operaciones_Militares.OperacionesMilitares;
 import Soldado_Principal.Soldado;
+
+
 
 public class Capitan extends Soldado implements OperacionesMilitares {
 
-    private int soldadosbajosumando;
+    private int cantidadSoldadosBajoSuMando;
 
+    public Capitan(String nombresoldado, int ID, int rango, int cantidadSoldadosBajoSuMando) {
+        super(nombresoldado, ID, rango);
+        this.cantidadSoldadosBajoSuMando = cantidadSoldadosBajoSuMando;
 
-    public Capitan(String nombredelsoldado, int ID, int rango, int soldadosbajosumando) {
-        super(nombredelsoldado, ID, rango);
-        this.soldadosbajosumando = soldadosbajosumando;
-
-        }
-    
-    
-    public void mostrarRango() {
-        System.out.println("Rango: Capitan");
-    
-        
+       
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + "Capitan" + "\nSoldados bajo su mando=" + soldadosbajosumando ;
+    public int getCantidadSoldadosBajoSuMando() {
+        return cantidadSoldadosBajoSuMando;
+    }
+
+    public void setCantidadSoldadosBajoSuMando(int cantidadSoldadosBajoSuMando) {
+        this.cantidadSoldadosBajoSuMando = cantidadSoldadosBajoSuMando;
     }
 
     @Override
     public void asignarMision(String mision) {
-        System.out.println("Mision: " + mision);
+        System.out.println("El Capitán " + getNombresoldado() + " asignó la misión: " + mision);
     }
 
     @Override
     public void reportarEstado() {
-        System.out.println("Reportando Estado");
+        System.out.println("El Capitan- Nombre: " + getNombresoldado() + ", ID: " + getID() + ", Rango: " + getRango());
+        System.out.println("El Capitán reporta: Todo en orden.");
     }
-    
-    
 
+    // Método para mostrar rango
+    public void mostrarRango() {
+        System.out.println("Rango: Capitán");
+    }
 }
-

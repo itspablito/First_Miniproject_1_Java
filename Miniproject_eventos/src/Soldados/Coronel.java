@@ -1,36 +1,38 @@
 package Soldados;
-import Rango.Rango;
-import Interfaz.OperacionesMilitares;
-import Soldado_Principal.Soldado;  
 
-public class Coronel extends Soldado implements OperacionesMilitares{
-    private String EstrategiaMilitar;
+import Soldado_Principal.Soldado;
+import Operaciones_Militares.OperacionesMilitares;
 
+public class Coronel extends Soldado implements OperacionesMilitares {
 
-    public Coronel(String nombredelsoldado, int ID, int rango, String EstrategiaMilitar) {
-        super(nombredelsoldado, ID, rango);
-        this.EstrategiaMilitar = EstrategiaMilitar;
-        System.out.println("Coronel");
-    }
+    private String estrategiaMilitar;
 
-    public void mostrarRango() {
-        System.out.println("Rango: Coronel");
-    }
     
-    @Override
-    public String toString() {
-        return super.toString() + "Coronel" + "\nEstrategia Militar = " + EstrategiaMilitar;
+    public Coronel(String nombresoldado, int ID, int rango, String estrategiaMilitar) {
+        super(nombresoldado, ID, rango);
+        
     }
+
+
+    public String getEstrategiaMilitar() {
+        return estrategiaMilitar;
+    }
+
+    public void setEstrategiaMilitar(String estrategiaMilitar) {
+        this.estrategiaMilitar = estrategiaMilitar;
+    }
+
 
     @Override
     public void asignarMision(String mision) {
-        System.out.println("Mision: " + mision);
+        System.out.println("El Coronel " + getNombresoldado() + " asignó la misión: " + mision);
     }
 
     @Override
     public void reportarEstado() {
-        System.out.println("Reportando Estado");
+        System.out.println("El Coronel - Nombre: " + getNombresoldado() + ", ID: " + getID() + ", Rango: " + getRango());
+        System.out.println("El Coronel " + getNombresoldado() + " reporta que la operación está en curso.");
     }
-    
-    
 }
+
+
