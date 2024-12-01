@@ -39,4 +39,10 @@ public class Capitan extends Soldado implements OperacionesMilitares {
     public void mostrarRango() {
         System.out.println("Rango: Capitán");
     }
+
+    @Override
+    public String toString() {
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() +"| Soldados Bajo su Mando: " + cantidadSoldadosBajoSuMando + "|";
+    }
+
 }

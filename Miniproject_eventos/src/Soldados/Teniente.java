@@ -43,4 +43,8 @@ public class Teniente extends Soldado implements OperacionesMilitares {
     System.out.println("El Teniente reporta que todo está bajo control.");
     }
 
+    @Override
+    public String toString() {
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() +"| Unidad Teniente: " + unidad + "|";
+    }
 }

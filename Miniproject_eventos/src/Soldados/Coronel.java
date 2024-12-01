@@ -10,6 +10,7 @@ public class Coronel extends Soldado implements OperacionesMilitares {
     
     public Coronel(String nombresoldado, int ID, int rango, String estrategiaMilitar) {
         super(nombresoldado, ID, rango);
+        this.estrategiaMilitar = estrategiaMilitar;
         
     }
 
@@ -33,6 +34,12 @@ public class Coronel extends Soldado implements OperacionesMilitares {
         System.out.println("El Coronel - Nombre: " + getNombresoldado() + ", ID: " + getID() + ", Rango: " + getRango());
         System.out.println("El Coronel " + getNombresoldado() + " reporta que la operación está en curso.");
     }
+
+    @Override
+    public String toString() {
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() + " ()" + "| Estrategia Militar Coronel: " + estrategiaMilitar + "|";
+    }
+
 }
 
 

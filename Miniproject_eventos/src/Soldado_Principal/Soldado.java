@@ -53,5 +53,11 @@ public class Soldado{
         this.rango = rango;
     }
 
+    @Override
+    public String toString() {
+        // Representación amigable del objeto
+        return "ID: " + ID + ", Nombre: " + nombresoldado + ", Rango: " + rango;
+    }
+
 }
 
