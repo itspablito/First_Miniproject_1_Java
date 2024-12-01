@@ -22,6 +22,10 @@ public class SoldadoRaso extends Soldado implements OperacionesMilitares {
         System.out.println("Soldado Raso - Nombre: " + getNombresoldado() + ", ID: " + getID() + ", Rango: " + getRango());
     }
 
+    @Override
+    public String toString() {
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() + "|";
+    }
     /*/ @Override
     public void realizarAccion() {
         System.out.println( getNombresoldado() + " está siguiendo órdenes como Soldado Raso.");

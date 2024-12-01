@@ -23,6 +23,11 @@ public class Capitan extends Soldado implements OperacionesMilitares {
     public void setCantidadSoldadosBajoSuMando(int cantidadSoldadosBajoSuMando) {
         this.cantidadSoldadosBajoSuMando = cantidadSoldadosBajoSuMando;
     }
+    
+    // Método para mostrar rango
+    public void mostrarRango() {
+        System.out.println("Rango: Capitán");
+    }
 
     @Override
     public void asignarMision(String mision) {
@@ -35,8 +40,9 @@ public class Capitan extends Soldado implements OperacionesMilitares {
         System.out.println("El Capitán reporta: Todo en orden.");
     }
 
-    // Método para mostrar rango
-    public void mostrarRango() {
-        System.out.println("Rango: Capitán");
+    @Override
+    public String toString() {
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() +"| Soldados Bajo su Mando: " + cantidadSoldadosBajoSuMando + "|";
     }
+
 }
