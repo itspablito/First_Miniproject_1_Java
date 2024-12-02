@@ -45,9 +45,6 @@ public class Teniente extends Soldado implements OperacionesMilitares {
 
     @Override
     public String toString() {
-        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() +"| Unidad Teniente: " + unidad + "|";
-    }   
-    
-
-
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + rango + " (Teniente)" +"| Unidad Teniente: " + unidad + "|";
+    }
 }

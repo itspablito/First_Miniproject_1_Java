@@ -2,7 +2,6 @@ package Soldados;
 
 import Soldado_Principal.Soldado;
 import Operaciones_Militares.OperacionesMilitares;
-import Rango.Rango;
 
 public class Coronel extends Soldado implements OperacionesMilitares {
 
@@ -36,16 +35,10 @@ public class Coronel extends Soldado implements OperacionesMilitares {
         System.out.println("El Coronel " + getNombresoldado() + " reporta que la operación está en curso.");
     }
 
-
     @Override
     public String toString() {
-        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() + " ()" + "| Estrategia Militar Coronel: " + estrategiaMilitar + "|";
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + rango + " (Coronel)" + "| Estrategia Militar Coronel: " + estrategiaMilitar + "|";
     }
-
-    
-
-
-
 
 }
 

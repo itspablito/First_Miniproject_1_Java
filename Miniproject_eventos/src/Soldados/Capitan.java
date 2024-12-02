@@ -40,9 +40,10 @@ public class Capitan extends Soldado implements OperacionesMilitares {
         System.out.println("El Capitán reporta: Todo en orden.");
     }
 
+
     @Override
     public String toString() {
-        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() +"| Soldados Bajo su Mando: " + cantidadSoldadosBajoSuMando + "|";
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + rango + " (Capitan)" +"| Soldados Bajo su Mando: " + cantidadSoldadosBajoSuMando + "|";
     }
 
 }

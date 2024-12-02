@@ -1,4 +1,8 @@
 import java.util.Scanner;
+import java.awt.*;
+
+import javax.swing.*;
+
 import Soldados.Capitan;
 import Soldados.Coronel;
 import Soldados.SoldadoRaso;
@@ -10,88 +14,47 @@ import Soldado_Principal.Soldado;
 
 
 
-public class App {
-    private static List<Soldado> soldados = new ArrayList<>();
+public class App extends JFrame {
+    public static List<Soldado> soldados = new ArrayList<>();
+    public static List<Tarea> tareas = new ArrayList<>();
+    
 
     public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println( "(1) Para crear Soldado" + 
-                                "\n(2) Para leer Soldado" +
-                                "\n(3) Para actualizar Soldado" +
-                                "\n(4) Para eliminar Soldado" +
-                                "\n(5) Para gestionar Misiones" +
-                                "\n(6) Salir" +
-                                "\nElija una opción: ");
-            int numero = scanner.nextInt();
-            
-            switch (numero) {
-                case 1:
-                    crearSoldado(scanner); 
-                    break;
-                case 2:
-                    leerSoldado(scanner);
-                    break;
-                case 3:
-                    actSoldado(scanner);
-                    break;
-                case 4:
-                    borrarSoldado(scanner);
-                    break;
-                case 5:
-                    misiones(scanner); 
-                    break;
-                case 6:
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Opcion invalida, vuelve a intentarlo \n ");
-            }
-        }
+        new Visual().sisas(soldados);
     }
+        
 
     ////////////////////////////////////////////////METODO CREAR SOLDADO//////////////////////////////////////////////
 
-    private static void crearSoldado(Scanner scanner) {
-        System.out.print("Introduzca el Nombre: ");
-        String NomSoldado = scanner.next();
-        System.out.print("Rangos:\n(1) SoldadoRaso \n(2) Teniente \n(3) Capitan \n(4) Coronel \nIntroduzca Rango: ");
-        int RanSoldado = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Introduzca ID: ");
-        int IDSoldado = scanner.nextInt();
-        scanner.nextLine();
-    
-        switch (RanSoldado) {
+    public static void crearSoldado(String nombreVisual,int id,int rango) {
+        switch (rango) {
             case 1 -> {
-                SoldadoRaso soldado = new SoldadoRaso(NomSoldado, IDSoldado, RanSoldado);
+                SoldadoRaso soldado = new SoldadoRaso(nombreVisual, id, rango);
                 soldados.add(soldado);
-                System.out.println("Soldado Raso creado.\n");
+                Visual.actualizarLista();
             }
             case 2 -> {
-                System.out.print("Introduzca la unidad del Teniente: ");
-                String unidad = scanner.nextLine();
+                String unidad = JOptionPane.showInputDialog(null, "unidad:", "Entrada de Datos", JOptionPane.PLAIN_MESSAGE);
     
-                Teniente teniente = new Teniente(NomSoldado, IDSoldado, RanSoldado, unidad);
+                Teniente teniente = new Teniente(nombreVisual, id, rango, unidad);
                 soldados.add(teniente);
-                System.out.println("Teniente creado.\n");
+                Visual.actualizarLista();
+                
+                
             }
             case 3 -> {
-                System.out.print("Introduzca la cantidad de soldados bajo su mando: ");
-                int cantidadSoldados = scanner.nextInt();
-                scanner.nextLine();
-    
-                Capitan capitan = new Capitan(NomSoldado, IDSoldado, RanSoldado, cantidadSoldados);
+                String mando = JOptionPane.showInputDialog(null, "ingrese los soldados bajo su mando:", "Entrada de Datos", JOptionPane.PLAIN_MESSAGE);
+                int soldadosbajosumando = Integer.parseInt(mando);
+
+                Capitan capitan = new Capitan(nombreVisual, id, rango, soldadosbajosumando);
                 soldados.add(capitan);
-                System.out.println("Capitán creado.\n");
+                Visual.actualizarLista();
             }
             case 4 -> {
-                System.out.print("Introduzca la estrategia militar: ");
-                String estrategia = scanner.nextLine();
-    
-                Coronel coronel = new Coronel(NomSoldado, IDSoldado, RanSoldado, estrategia);
+                String estrategia = JOptionPane.showInputDialog(null, "estrategia militar:", "Entrada de Datos", JOptionPane.PLAIN_MESSAGE);    
+                Coronel coronel = new Coronel(nombreVisual, id, rango, estrategia);
                 soldados.add(coronel);
-                System.out.println("Coronel creado.\n");
+                Visual.actualizarLista();
             }
             default -> System.out.println("Rango inválido.");
         }
@@ -140,52 +103,93 @@ public class App {
 
     ////////////////////////////////////////////////METODO ACTUALIZAR SOLDADO//////////////////////////////////////////////
 
-    private static void actSoldado(Scanner scanner) {
-        System.out.print("Introduzca el ID del soldado: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); 
+    public static void actSoldado(int id) {                    
+    JLabel etiqueta_nuevoNombre = new JLabel("Introducir nuevo nombre: ");
+    etiqueta_nuevoNombre.setFont(new Font("Arial", Font.BOLD, 30));
 
-        boolean encontrado = false;
-        for (Soldado soldado : soldados) {
-            if (soldado.getID() == id) {
-                encontrado = true;
-                
+    JTextField nuevoNombre_actualizar = new JTextField(5); // Campo de texto
+    nuevoNombre_actualizar.setFont(new Font("Arial", Font.BOLD, 40));
 
-                System.out.print("Introducir nuevo nombre: ");
-                String nuevoNombre = scanner.nextLine();
+    JLabel etiqueta_nuevoRango = new JLabel("Introducir nuevo rango (1-4): ");
+    etiqueta_nuevoRango.setFont(new Font("Arial", Font.BOLD, 30));
 
-                System.out.print("Introducir nuevo rango (1-4): ");
-                int nuevoRango = scanner.nextInt();
+    JTextField nuevoRango = new JTextField(5); // Campo de texto
+    nuevoRango.setFont(new Font("Arial", Font.BOLD, 40));
 
-                if (nuevoRango < 1 || nuevoRango > 4) {
-                    System.out.println("Rango inválido. Vuelve a intentarlo.\n");
-                    return;
+    JButton funcionar = new JButton("Actualizar Soldado");
+    
+    boolean encontrado = false;
+
+    for (Soldado soldado : soldados) {
+        if (soldado.getID() == id) {
+            encontrado = true;                        
+            JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado encontrado: " + soldado.getNombresoldado());
+
+            //Visual.Nombreactualizar.setVisible(false);
+            Visual.TextobuscarID.setVisible(false);
+            Visual.buscarID.setVisible(false);
+            // Limpiar el panel antes de agregar nuevos componentes
+
+            Visual.panelactualizar.add(etiqueta_nuevoNombre);
+            Visual.panelactualizar.add(nuevoNombre_actualizar);
+            Visual.panelactualizar.add(etiqueta_nuevoRango);
+            Visual.panelactualizar.add(nuevoRango);
+            Visual.panelactualizar.add(funcionar);
+            Visual.panelactualizar.revalidate();
+            Visual.panelactualizar.repaint();
+            
+            funcionar.addActionListener(e -> {
+                String nuevo_nombre = nuevoNombre_actualizar.getText();
+                String nuevo_rango = nuevoRango.getText();
+                try {
+                    int rango = Integer.parseInt(nuevo_rango);
+                    soldado.setNombresoldado(nuevo_nombre); 
+                    solicitarDatosPorRango(soldado, rango); // Cambiado a 'soldado'
+                    JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado actualizado correctamente.");
+                    etiqueta_nuevoNombre.setVisible(false);
+                    nuevoNombre_actualizar.setVisible(false);
+                    etiqueta_nuevoRango.setVisible(false);
+                    nuevoRango.setVisible(false);
+                    Visual.TextobuscarID.setVisible(true);
+                    Visual.buscarID.setVisible(true);
+                    Visual.panelactualizar.remove(etiqueta_nuevoNombre);
+                    Visual.panelactualizar.remove(etiqueta_nuevoRango);
+                    Visual.panelactualizar.remove(nuevoRango);
+                    Visual.panelactualizar.remove(nuevoNombre_actualizar);
+                    Visual.panelactualizar.remove(funcionar);
+                   // Actualizar la lista de soldados visualmente
+                    Visual.actualizarLista();
+                    // Ocultar panel de actualización y mostrar el panel central
+                    Visual.panelactualizar.setVisible(false);
+                    Visual.panelCentral.setVisible(true);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(Visual.panelactualizar, "El rango debe ser un número válido.");
                 }
-
-                soldado.setNombresoldado(nuevoNombre);
-                soldado.setRango(nuevoRango);
-                System.out.println("Soldado actualizado correctamente.\n");
-                break;
-            }
-        }
-
-        if (!encontrado) {
-            System.out.println("ID inválido. Vuelve a intentarlo. \n");
+            });
+            break;
         }
     }
 
+    if (!encontrado) {
+        JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado no encontrado.");
+    }
+    }
+
+
+
     ////////////////////////////////////////////////METODO BORRAR SOLDADO//////////////////////////////////////////////
 
-    private static void borrarSoldado(Scanner scanner) {
-        System.out.print("Introduzca el ID del soldado: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+    public static void borrarSoldado(int IDaeliminar) {
+        
         boolean encontrado = false;
         for (int i = 0; i < soldados.size(); i++) {
-            if (soldados.get(i).getID() == id) {  
+            if (soldados.get(i).getID() == IDaeliminar) {  
                 soldados.remove(i);
-                System.out.println("Soldado borrado. \n");
                 encontrado = true;
+                Visual.actualizarLista();
+                JOptionPane.showMessageDialog(Visual.panelelimiar, "Soldado eliminado corractamente.");
+                Visual.panelelimiar.setVisible(false);
+                Visual.panelCentral.setVisible(true);
                 break;
             }
         }
@@ -198,57 +202,36 @@ public class App {
 
     //////////////////////////////////////////////METODO GESTIONAR MISIONES//////////////////////////////////////////////
 
-    private static void misiones(Scanner scanner) {
-        System.out.println("Gestión de Misiones");
-        System.out.println("(1) Asignar Misión\n(2) Reportar Estado\n(3) Regañar Soldado\n(4) Volver");
-        System.out.print("Elija una opción: ");
-        int opcion = scanner.nextInt();
-        scanner.nextLine();
-    
-        if (opcion == 4) {
+    public static void misiones(int opcion, int ID) {
+        int opcion1 = opcion;
+        if (opcion1 == 4) {
             return; 
         }
     
-        System.out.print("Introduzca el ID del soldado: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-    
-        Soldado soldado = buscarSoldadoPorID(id); 
-        if (soldado == null) {
-            System.out.println("ID inválido. Vuelve a intentarlo.");
+        Soldado soldado1 = buscarSoldadoPorID(ID); 
+        if (soldado1 == null) {
+            
             return;
         }
         
-        switch (opcion) {
-            case 1 -> asignarMision(scanner, soldado);
-            case 2 -> soldado.mostrardatos();
-            case 3 -> regañarSoldado(scanner, soldado);
-            default -> System.out.println("Opción inválida. Vuelve a intentarlo.");
+        if (opcion1 == 2) {
+            soldado1.mostrardatos();
+            }
+        else if (opcion1 == 3) {
+            regañarSoldado(soldado1);
+            }
+        else {
+        System.out.println("3");
         }
-        /*switch (opcion) {
-            case 1 -> {
-                if (soldado instanceof SoldadoRaso soldadoRaso) {
-                    asignarMision(scanner, soldadoRaso);
-                } else {
-                    System.out.println("Solo los Soldados Rasos pueden recibir misiones específicas.");
-                }
-            }
-            case 2 -> soldado.mostrardatos();
-            case 3 -> {
-                if (soldado instanceof SoldadoRaso soldadoRaso && soldadoRaso.getRango() < 2) {
-                    System.out.println("Solo los soldados de rango Capitán o superior pueden regañar.");
-                } else {
-                    regañarSoldado(scanner, soldado);
-                }
-            }
-            default -> System.out.println("Opción inválida. Vuelve a intentarlo."); 
-        }*/
     }
     
     
-    private static void asignarMision(Scanner scanner, Soldado soldado) {
+    private static void asignarMision(Scanner scanner,int IDasiganado) {
+
+        Soldado soldado = buscarSoldadoPorID(IDasiganado); 
         int rango = soldado.getRango();
         List<Tarea> tareas = Tarea.getTareasPorRango(rango);
+
 
         if (tareas.isEmpty()) {
             System.out.println("Este rango no tiene tareas asignables.");
@@ -279,12 +262,17 @@ public class App {
     private static Soldado buscarSoldadoPorID(int id) {
         for (Soldado soldado : soldados) {
             if (soldado.getID() == id) {
-                return soldado; // Devuelve el objeto tal cual, sin hacer downcasting.
+                // Soldado encontrado
+                JOptionPane.showMessageDialog(null, "Soldado encontrado: " + soldado.getNombresoldado());
+                return soldado;
             }
         }
-        System.out.println("Soldado no encontrado.");
+        // No se encontró el soldado
+        JOptionPane.showMessageDialog(null, "Soldado no encontrado con ID: " + id, "Error", JOptionPane.ERROR_MESSAGE);
         return null;
     }
+    
+    
     
 
  ////////////////////////////////////////////// ENUM PARA TAREA //////////////////////////////////////////////
@@ -293,9 +281,7 @@ public class App {
         RECONOCIMIENTO,
         DEFENSA,
         ENTRENAMIENTO;
-
         public static List<Tarea> getTareasPorRango(int rango) {
-            List<Tarea> tareas = new ArrayList<>();
             switch (rango) {
                 case 1: 
                     tareas.add(RECONOCIMIENTO);
@@ -320,36 +306,120 @@ public class App {
         }
     }
 
- ////////////////////////////////////////////// MÉTODO REGAÑAR SOLDADO //////////////////////////////////////////////
+////////////////////////////////////////////// MÉTODO REGAÑAR SOLDADO //////////////////////////////////////////////
 
 
- private static void regañarSoldado(Scanner scanner, Soldado soldadoRegañador) {
-    System.out.print("Introduzca el ID del soldado a regañar: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
+    private static void regañarSoldado(Soldado soldadoRegañador) {
+        
+        JTextField regañado1 = new JTextField(5);
+        regañado1.setFont(new Font("Arial", Font.BOLD, 40));
 
-    Soldado soldadoRegañado = buscarSoldadoPorID(id);
+        JButton btnConfirmar = new JButton("Confirmar");
 
-    if (soldadoRegañado == null) {
-        System.out.println("Soldado no encontrado. Intenta de nuevo.");
-        return;
+        // Añadir campo y botón al panel
+
+        JLabel etiqueta_regañado = new JLabel("Ingrese ID del soldado a regañar: ");
+        Visual.panelRegañar.add(etiqueta_regañado);
+        etiqueta_regañado.setFont(new Font("Arial", Font.BOLD, 30));
+        Visual.panelRegañar.add(regañado1);
+        Visual.panelRegañar.add(btnConfirmar);
+        
+        regañado1.setVisible(true);
+        btnConfirmar.setVisible(true);
+
+        Visual.panelRegañar.revalidate();
+        Visual.panelRegañar.repaint();
+
+        // Acción del botón
+        btnConfirmar.addActionListener(e -> {
+            try {
+                String input = regañado1.getText();
+                if (input.isEmpty()) {
+                    JOptionPane.showMessageDialog(Visual.panelRegañar, "Debe ingresar un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                int regañado = Integer.parseInt(input);
+                Soldado soldadoRegañado = buscarSoldadoPorID(regañado);
+
+                if (soldadoRegañado == null) {
+                    JOptionPane.showMessageDialog(Visual.panelRegañar, "Soldado no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (soldadoRegañador.getRango() <= soldadoRegañado.getRango()) {
+                    JOptionPane.showMessageDialog(Visual.panelRegañar, "No puedes regañar a un soldado de igual o mayor rango.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (soldadoRegañado.getRango() == 1) {
+                    soldados.remove(soldadoRegañado);
+                    JOptionPane.showMessageDialog(Visual.panelRegañar, "El Soldado " + soldadoRegañado.getNombresoldado() + " ha sido EXPULSADO!!!");
+                    Visual.actualizarLista();
+                    Visual.panelRegañar.setVisible(false);
+                    Visual.gestionarmisionesPrincipal.setVisible(true);
+                } else {
+                    int nuevoRango = soldadoRegañado.getRango() - 1;
+                    JOptionPane.showMessageDialog(Visual.panelRegañar, "El soldado " + soldadoRegañado.getNombresoldado() + " ha sido bajado de rango a: " + getNombreRango(nuevoRango));
+                    solicitarDatosPorRango(soldadoRegañado, nuevoRango);
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(Visual.panelRegañar, "El ID debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
 
-    if (soldadoRegañador.getRango() <= soldadoRegañado.getRango()) {
-        System.out.println("No puedes regañar a un soldado de igual o mayor rango.");
-        return;
-    }
 
-    if (soldadoRegañado.getRango() == 1) {
-        soldados.remove(soldadoRegañado);
-        System.out.println("El Soldado " + soldadoRegañado.getNombresoldado() + " ha sido EXPULSADO!!!");
-    } else {
-        int nuevoRango = soldadoRegañado.getRango() - 1;
-        soldadoRegañado.setRango(nuevoRango);
-        System.out.println("El soldado " + soldadoRegañado.getNombresoldado() +
-                        " ha sido bajado de rango. Ahora es: " + getNombreRango(nuevoRango) + ".");
+    private static void solicitarDatosPorRango(Soldado soldadoRegañado, int nuevoRango) {
+        String nuevoNombre = soldadoRegañado.getNombresoldado();  
+        int id = soldadoRegañado.getID();
+
+        switch (nuevoRango) {
+    case 1 -> {
+        SoldadoRaso nuevoSoldado = new SoldadoRaso(nuevoNombre, id, nuevoRango);
+        reemplazarSoldadoEnLista(soldadoRegañado, nuevoSoldado);
+        Visual.actualizarLista();
+        Visual.panelRegañar.setVisible(false);
+        Visual.panelCentral.setVisible(true);
+    }
+    case 2 -> {
+        String unidad = JOptionPane.showInputDialog(null, "Unidad:", "Entrada de Datos", JOptionPane.PLAIN_MESSAGE);
+        Teniente nuevoTeniente = new Teniente(nuevoNombre, id, nuevoRango, unidad);
+        reemplazarSoldadoEnLista(soldadoRegañado, nuevoTeniente);
+        Visual.actualizarLista();
+        Visual.panelRegañar.setVisible(false);
+        Visual.panelCentral.setVisible(true);
+    }
+    case 3 -> {
+        String cantidadSoldados1 = JOptionPane.showInputDialog(null, "Soldados bajo su mando:", "Entrada de Datos", JOptionPane.PLAIN_MESSAGE);
+        int cantidadSoldados = Integer.parseInt(cantidadSoldados1);
+        Capitan nuevoCapitan = new Capitan(nuevoNombre, id, nuevoRango, cantidadSoldados);
+        reemplazarSoldadoEnLista(soldadoRegañado, nuevoCapitan);
+        Visual.actualizarLista();
+        Visual.panelRegañar.setVisible(false);
+        Visual.panelCentral.setVisible(true);
+    }
+    case 4 -> {
+        String estrategia = JOptionPane.showInputDialog(null, "Estrategia militar:", "Entrada de Datos", JOptionPane.PLAIN_MESSAGE);
+        Coronel nuevoCoronel = new Coronel(nuevoNombre, id, nuevoRango, estrategia);
+        reemplazarSoldadoEnLista(soldadoRegañado, nuevoCoronel);
+        Visual.actualizarLista();
+        Visual.panelRegañar.setVisible(false);
+        Visual.panelCentral.setVisible(true);
     }
 }
+ 
+    }
+
+    private static void reemplazarSoldadoEnLista(Soldado viejoSoldado, Soldado nuevoSoldado) {
+        int index = soldados.indexOf(viejoSoldado);
+        if (index != -1) {
+            soldados.set(index, nuevoSoldado);
+        }
+
+    }
+    public void reportarEstado() {
+    }
 }
 
    

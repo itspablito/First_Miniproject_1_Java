@@ -24,7 +24,7 @@ public class SoldadoRaso extends Soldado implements OperacionesMilitares {
 
     @Override
     public String toString() {
-        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + getRango() + "|";
+        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + rango + "(Soldado Raso)" + "|";
     }
     /*/ @Override
     public void realizarAccion() {

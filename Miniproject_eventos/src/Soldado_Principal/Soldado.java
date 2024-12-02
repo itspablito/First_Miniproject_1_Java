@@ -56,7 +56,7 @@ public class Soldado{
     @Override
     public String toString() {
         // Representación amigable del objeto
-        return "|ID: " + ID + "| Nombre: " + nombresoldado.toUpperCase() + "| Rango: " + rango + "|";
+        return "ID: " + ID + ", Nombre: " + nombresoldado + ", Rango: " + rango;
     }
 
 }
