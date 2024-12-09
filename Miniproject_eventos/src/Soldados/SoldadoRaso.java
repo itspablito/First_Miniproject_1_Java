@@ -1,6 +1,6 @@
 package Soldados;
-import Soldado_Principal.Soldado;
 import Interfaz.OperacionesMilitares;
+import SoldadoBase.Soldado;
 
 public class SoldadoRaso extends Soldado implements OperacionesMilitares { 
     
