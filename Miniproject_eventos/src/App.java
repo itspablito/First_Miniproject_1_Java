@@ -104,71 +104,83 @@ public class App extends JFrame {
     ////////////////////////////////////////////////METODO ACTUALIZAR SOLDADO//////////////////////////////////////////////
 
     public static void actSoldado(int id) {                    
-    JLabel etiqueta_nuevoNombre = new JLabel("Introducir nuevo nombre: ");
-    etiqueta_nuevoNombre.setFont(new Font("Arial", Font.BOLD, 30));
+        JLabel etiqueta_nuevoNombre = new JLabel("Introducir nuevo nombre: ");
+        etiqueta_nuevoNombre.setFont(new Font("Arial", Font.BOLD, 30));
 
-    JTextField nuevoNombre_actualizar = new JTextField(5); // Campo de texto
-    nuevoNombre_actualizar.setFont(new Font("Arial", Font.BOLD, 40));
+        JTextField nuevoNombre_actualizar = new JTextField(5); // Campo de texto
+        nuevoNombre_actualizar.setFont(new Font("Arial", Font.BOLD, 40));
 
-    JLabel etiqueta_nuevoRango = new JLabel("Introducir nuevo rango (1-4): ");
-    etiqueta_nuevoRango.setFont(new Font("Arial", Font.BOLD, 30));
+        JLabel etiqueta_nuevoRango = new JLabel("Introducir nuevo rango (1-4): ");
+        etiqueta_nuevoRango.setFont(new Font("Arial", Font.BOLD, 30));
 
-    JTextField nuevoRango = new JTextField(5); // Campo de texto
-    nuevoRango.setFont(new Font("Arial", Font.BOLD, 40));
+        JTextField nuevoRango = new JTextField(5); // Campo de texto
+        nuevoRango.setFont(new Font("Arial", Font.BOLD, 40));
 
-    JButton funcionar = new JButton("Actualizar Soldado");
-    
-    boolean encontrado = false;
+        JButton funcionar = new JButton("Actualizar Soldado");
+        
+        boolean encontrado = false;
 
-    for (Soldado soldado : soldados) {
-        if (soldado.getID() == id) {
-            encontrado = true;                        
-            JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado encontrado: " + soldado.getNombresoldado());
+        for (Soldado soldado : soldados) {
+            if (soldado.getID() == id) {
+                encontrado = true;                        
+                JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado encontrado: " + soldado.getNombresoldado());
 
-            //Visual.Nombreactualizar.setVisible(false);
-            Visual.TextobuscarID.setVisible(false);
-            Visual.buscarID.setVisible(false);
-            // Limpiar el panel antes de agregar nuevos componentes
+                
+                Visual.panelactualizar.removeAll();
+                // Limpiar el panel antes de agregar nuevos componentes
 
-            Visual.panelactualizar.add(etiqueta_nuevoNombre);
-            Visual.panelactualizar.add(nuevoNombre_actualizar);
-            Visual.panelactualizar.add(etiqueta_nuevoRango);
-            Visual.panelactualizar.add(nuevoRango);
-            Visual.panelactualizar.add(funcionar);
-            Visual.panelactualizar.revalidate();
-            Visual.panelactualizar.repaint();
-            
-            funcionar.addActionListener(e -> {
-                String nuevo_nombre = nuevoNombre_actualizar.getText();
-                String nuevo_rango = nuevoRango.getText();
-                try {
-                    int rango = Integer.parseInt(nuevo_rango);
-                    soldado.setNombresoldado(nuevo_nombre); 
-                    solicitarDatosPorRango(soldado, rango); // Cambiado a 'soldado'
-                    JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado actualizado correctamente.");
-                    etiqueta_nuevoNombre.setVisible(false);
-                    nuevoNombre_actualizar.setVisible(false);
-                    etiqueta_nuevoRango.setVisible(false);
-                    nuevoRango.setVisible(false);
-                    Visual.TextobuscarID.setVisible(true);
-                    Visual.buscarID.setVisible(true);
-                    Visual.panelactualizar.remove(etiqueta_nuevoNombre);
-                    Visual.panelactualizar.remove(etiqueta_nuevoRango);
-                    Visual.panelactualizar.remove(nuevoRango);
-                    Visual.panelactualizar.remove(nuevoNombre_actualizar);
-                    Visual.panelactualizar.remove(funcionar);
-                   // Actualizar la lista de soldados visualmente
-                    Visual.actualizarLista();
-                    // Ocultar panel de actualización y mostrar el panel central
-                    Visual.panelactualizar.setVisible(false);
-                    Visual.panelCentral.setVisible(true);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(Visual.panelactualizar, "El rango debe ser un número válido.");
-                }
-            });
-            break;
+                // Agregar nuevos componentes
+                etiqueta_nuevoNombre.setBounds(50, 50, 500, 50);
+                nuevoNombre_actualizar.setBounds(50, 100, 500, 50);
+                etiqueta_nuevoRango.setBounds(50, 200, 500, 50);
+                nuevoRango.setBounds(50, 250, 500, 50);
+                funcionar.setBounds(50, 350, 200, 50);
+
+                Visual.panelactualizar.add(etiqueta_nuevoNombre);
+                Visual.panelactualizar.add(nuevoNombre_actualizar);
+                Visual.panelactualizar.add(etiqueta_nuevoRango);
+                Visual.panelactualizar.add(nuevoRango);
+                Visual.panelactualizar.add(funcionar);
+
+                //Actualizar el panel Visualmente
+                Visual.panelactualizar.revalidate();
+                Visual.panelactualizar.repaint();
+                
+                funcionar.addActionListener(e -> {
+                    String nuevo_nombre = nuevoNombre_actualizar.getText();
+                    String nuevo_rango = nuevoRango.getText();
+                    try {
+                        int rango = Integer.parseInt(nuevo_rango);
+                        soldado.setNombresoldado(nuevo_nombre); 
+                        solicitarDatosPorRango(soldado, rango); // Cambiado a 'soldado'
+                        JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado actualizado correctamente.");
+                        Visual.panelactualizar.removeAll();
+                        Visual.panelactualizar.revalidate();
+                        Visual.panelactualizar.repaint();
+                        // Mostrar panel de actualización
+                        Visual.labelNombre2.setVisible(true);
+                        Visual.Nombreactualizar.setVisible(true);
+                        Visual.TextobuscarID.setVisible(true);
+                        Visual.buscarID.setVisible(true);
+                        Visual.panelactualizar.add(Visual.labelNombre2);
+                        Visual.panelactualizar.add(Visual.Nombreactualizar);
+                        Visual.panelactualizar.add(Visual.TextobuscarID);
+                        Visual.panelactualizar.add(Visual.buscarID);
+                        
+                        Visual.panelactualizar.revalidate();
+                        Visual.panelactualizar.repaint();
+                        // Actualizar la lista de soldados visualmente
+                        Visual.actualizarLista();
+                        // Ocultar panel de actualización y mostrar el panel central
+                        Visual.panelactualizar.setVisible(false);
+                        Visual.panelCentral.setVisible(true);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(Visual.panelactualizar, "El rango debe ser un número válido.");
+                    }
+                });
+                break;
+            }
         }
-    }
 
     if (!encontrado) {
         JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado no encontrado.");
@@ -202,28 +214,42 @@ public class App extends JFrame {
 
     //////////////////////////////////////////////METODO GESTIONAR MISIONES//////////////////////////////////////////////
 
-    public static void misiones(int opcion, int ID) {
-        int opcion1 = opcion;
-        if (opcion1 == 4) {
-            return; 
-        }
-    
-        Soldado soldado1 = buscarSoldadoPorID(ID); 
-        if (soldado1 == null) {
-            
+    public static void misiones(int opcion, int IDRegañador, int IDRegañado) {
+        // Validar la opción
+        if (opcion == 4) {
             return;
         }
-        
-        if (opcion1 == 2) {
-            soldado1.mostrardatos();
-            }
-        else if (opcion1 == 3) {
-            regañarSoldado(soldado1);
-            }
-        else {
-        System.out.println("3");
+    
+        // Buscar al soldado que regaña y al que será regañado
+        Soldado soldadoRegañador = buscarSoldadoPorID(IDRegañador);
+        Soldado soldadoRegañado = buscarSoldadoPorID(IDRegañado);
+    
+        // Validar si ambos soldados existen
+        if (soldadoRegañador == null || soldadoRegañado == null) {
+            JOptionPane.showMessageDialog(null, "Uno o ambos IDs no corresponden a soldados válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        // Opciones disponibles
+        switch (opcion) {
+            case 2: // Mostrar datos del soldado regañador
+                soldadoRegañador.mostrardatos();
+                break;
+    
+            case 3: // Regañar al soldado
+                if (soldadoRegañador.getRango() <= soldadoRegañado.getRango()) {
+                    JOptionPane.showMessageDialog(null, "No puedes regañar a un soldado de igual o mayor rango.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    regañarSoldado(soldadoRegañador, soldadoRegañado);
+                }
+                break;
+    
+            default: // Opción no válida
+                System.out.println("Opción no válida.");
+                break;
         }
     }
+    
     
     
     private static void asignarMision(Scanner scanner,int IDasiganado) {
@@ -309,64 +335,32 @@ public class App extends JFrame {
 ////////////////////////////////////////////// MÉTODO REGAÑAR SOLDADO //////////////////////////////////////////////
 
 
-    private static void regañarSoldado(Soldado soldadoRegañador) {
-        
-        JTextField regañado1 = new JTextField(5);
-        regañado1.setFont(new Font("Arial", Font.BOLD, 40));
-
-        JButton btnConfirmar = new JButton("Confirmar");
-
-        // Añadir campo y botón al panel
-
-        JLabel etiqueta_regañado = new JLabel("Ingrese ID del soldado a regañar: ");
-        Visual.panelRegañar.add(etiqueta_regañado);
-        etiqueta_regañado.setFont(new Font("Arial", Font.BOLD, 30));
-        Visual.panelRegañar.add(regañado1);
-        Visual.panelRegañar.add(btnConfirmar);
-        
-        regañado1.setVisible(true);
-        btnConfirmar.setVisible(true);
-
-        Visual.panelRegañar.revalidate();
-        Visual.panelRegañar.repaint();
-
-        // Acción del botón
-        btnConfirmar.addActionListener(e -> {
-            try {
-                String input = regañado1.getText();
-                if (input.isEmpty()) {
-                    JOptionPane.showMessageDialog(Visual.panelRegañar, "Debe ingresar un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                int regañado = Integer.parseInt(input);
-                Soldado soldadoRegañado = buscarSoldadoPorID(regañado);
-
-                if (soldadoRegañado == null) {
-                    JOptionPane.showMessageDialog(Visual.panelRegañar, "Soldado no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                if (soldadoRegañador.getRango() <= soldadoRegañado.getRango()) {
-                    JOptionPane.showMessageDialog(Visual.panelRegañar, "No puedes regañar a un soldado de igual o mayor rango.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                if (soldadoRegañado.getRango() == 1) {
-                    soldados.remove(soldadoRegañado);
-                    JOptionPane.showMessageDialog(Visual.panelRegañar, "El Soldado " + soldadoRegañado.getNombresoldado() + " ha sido EXPULSADO!!!");
-                    Visual.actualizarLista();
-                    Visual.panelRegañar.setVisible(false);
-                    Visual.gestionarmisionesPrincipal.setVisible(true);
-                } else {
-                    int nuevoRango = soldadoRegañado.getRango() - 1;
-                    JOptionPane.showMessageDialog(Visual.panelRegañar, "El soldado " + soldadoRegañado.getNombresoldado() + " ha sido bajado de rango a: " + getNombreRango(nuevoRango));
-                    solicitarDatosPorRango(soldadoRegañado, nuevoRango);
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(Visual.panelRegañar, "El ID debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+    private static void regañarSoldado(Soldado soldadoRegañador, Soldado soldadoRegañado) {
+        try {
+            if (soldadoRegañado == null) {
+                JOptionPane.showMessageDialog(Visual.panelRegañar, "Soldado no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-        });
+
+            if (soldadoRegañador.getRango() <= soldadoRegañado.getRango()) {
+                JOptionPane.showMessageDialog(Visual.panelRegañar, "No puedes regañar a un soldado de igual o mayor rango.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (soldadoRegañado.getRango() == 1) {
+                soldados.remove(soldadoRegañado);
+                JOptionPane.showMessageDialog(Visual.panelRegañar, "El Soldado " + soldadoRegañado.getNombresoldado() + " ha sido EXPULSADO!!!");
+                Visual.actualizarLista(); // Refresca la lista de soldados en la interfaz
+                Visual.panelRegañar.setVisible(false);
+                Visual.gestionarmisionesPrincipal.setVisible(true);
+            } else {
+                int nuevoRango = soldadoRegañado.getRango() - 1;
+                JOptionPane.showMessageDialog(Visual.panelRegañar, "El soldado " + soldadoRegañado.getNombresoldado() + " ha sido bajado de rango a: " + getNombreRango(nuevoRango));
+                solicitarDatosPorRango(soldadoRegañado, nuevoRango); // Actualiza el rango del soldado
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(Visual.panelRegañar, "Ocurrió un error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 
