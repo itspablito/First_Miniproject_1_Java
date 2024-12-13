@@ -24,7 +24,7 @@ public class App extends JFrame {
         new Visual().sisas(soldados);
         reproducirMusica();
         try {
-            Thread.sleep(10000); // Mantén el programa corriendo durante 10 segundos
+            Thread.sleep(1000); // Mantén el programa corriendo durante 1 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
