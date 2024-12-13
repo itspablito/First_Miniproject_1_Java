@@ -3,6 +3,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import Operaciones_Militares.OperacionesMilitares;
 import Soldados.Capitan;
 import Soldados.Coronel;
 import Soldados.SoldadoRaso;
@@ -212,7 +213,7 @@ public class App extends JFrame {
 
 
 
-    //////////////////////////////////////////////METODO GESTIONAR MISIONES//////////////////////////////////////////////
+    ////////////////////////////////////////////METODO GESTIONAR MISIONES//////////////////////////////////////////////
 
     public static void misiones(int opcion, int IDRegañador, int IDRegañado) {
         // Validar la opción
@@ -250,7 +251,17 @@ public class App extends JFrame {
         }
     }
     
+    /*public static void asignarMisionGeneral(Soldado soldado, String mision) {
+    if (soldado instanceof OperacionesMilitares) {
+        OperacionesMilitares operaciones = (OperacionesMilitares) soldado;
+        operaciones.asignarMision(mision);
+    } else {
+        System.out.println("Este soldado no puede recibir misiones.");
+    }}
     
+
+
+
     
     private static void asignarMision(Scanner scanner,int IDasiganado) {
 
@@ -281,11 +292,75 @@ public class App extends JFrame {
         Tarea tareaAsignada = tareas.get(seleccion - 1);
         soldado.asignarMision(tareaAsignada.name()); // Implementa este método en la clase Soldado.
         System.out.println("Misión '" + tareaAsignada + "' asignada correctamente.");
+   
 }
+
+    *//////////////////////////////////////////////// ASIGNAR MISION GENERAL //////////////////////////////////////////////
+
+
+    public static void asignarMisionGeneral(Soldado soldado) {
+        if (soldado instanceof OperacionesMilitares) {
+            OperacionesMilitares operaciones = (OperacionesMilitares) soldado;
+    
+            // Obtener las misiones disponibles según el rango del soldado
+            List<Tarea> misiones = Tarea.getTareasPorRango(soldado.getRango());
+            String[] opcionesMisiones = misiones.stream().map(Enum::name).toArray(String[]::new);
+    
+            String misionSeleccionada = (String) JOptionPane.showInputDialog(
+                null,
+                "Selecciona una misión para el soldado:\n" + soldado.getNombresoldado(),
+                "Asignar Misión",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesMisiones,
+                opcionesMisiones[0]
+            );
+    
+            if (misionSeleccionada != null) {
+                operaciones.asignarMision(misionSeleccionada);
+                JOptionPane.showMessageDialog(null,
+                    "Misión '" + misionSeleccionada + "' asignada a " + soldado.getNombresoldado(),
+                    "Misión Asignada",
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                    "No se asignó ninguna misión.",
+                    "Asignar Misión",
+                    JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,
+                "Este soldado no tiene rango para recibir misiones.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+
+    public static void reportarEstadoGeneral(Soldado soldado) {
+        if (soldado instanceof OperacionesMilitares) {
+            OperacionesMilitares operaciones = (OperacionesMilitares) soldado;
+    
+            StringBuilder estado = new StringBuilder();
+            estado.append("Nombre: ").append(soldado.getNombresoldado()).append("\n");
+            estado.append("ID: ").append(soldado.getID()).append("\n");
+            estado.append("Rango: ").append(soldado.getRango()).append("\n");
+            estado.append("Misión: ").append(operaciones.getMisionActual()).append("\n");
+    
+            JOptionPane.showMessageDialog(null, estado.toString(), "Estado del Soldado", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                "No hay información disponible para este soldado.",
+                "Estado del Soldado",
+                JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+
 
     //////////////////////////////////////////////METODO BUSCAR SOLDADO POR ID//////////////////////////////////////////////
 
-    private static Soldado buscarSoldadoPorID(int id) {
+    public static Soldado buscarSoldadoPorID(int id) {
         for (Soldado soldado : soldados) {
             if (soldado.getID() == id) {
                 // Soldado encontrado
@@ -303,29 +378,44 @@ public class App extends JFrame {
 
  ////////////////////////////////////////////// ENUM PARA TAREA //////////////////////////////////////////////
 
-    public enum Tarea{
+    public enum Tarea {
         RECONOCIMIENTO,
+        ESCOLTA,
         DEFENSA,
-        ENTRENAMIENTO;
+        ENTRENAMIENTO,
+        INTELIGENCIA,
+        ATAQUE;
+
         public static List<Tarea> getTareasPorRango(int rango) {
+            List<Tarea> tareas = new ArrayList<>();
             switch (rango) {
-                case 1: 
+                case 1: // Soldado Raso
                     tareas.add(RECONOCIMIENTO);
+                    tareas.add(ESCOLTA);
                     tareas.add(ENTRENAMIENTO);
                     break;
-                case 2:
+
+                case 2: // Teniente
                     tareas.add(DEFENSA);
                     tareas.add(RECONOCIMIENTO);
+                    tareas.add(ESCOLTA);
                     break;
-                case 3: 
+
+                case 3: // Capitán
                     tareas.add(DEFENSA);
                     tareas.add(RECONOCIMIENTO);
                     tareas.add(ENTRENAMIENTO);
+                    tareas.add(INTELIGENCIA);
                     break;
-                case 4: 
+
+                case 4: // Coronel
                     tareas.add(DEFENSA);
+                    tareas.add(ATAQUE);
+                    tareas.add(INTELIGENCIA);
+                    tareas.add(RECONOCIMIENTO);
                     break;
-                default:
+
+                default: // Sin rango válido
                     break;
             }
             return tareas;

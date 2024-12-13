@@ -1,24 +1,19 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-
-import Soldado_Principal.Soldado;
 import java.awt.*;
+import javax.swing.border.TitledBorder;
+import Soldado_Principal.Soldado;
 import java.util.List;
-import java.util.concurrent.Flow;
 
 
 public class Visual extends JFrame {
     
 	public static JFrame frame;
     public static JList<Soldado> SoldadoJlist, SoldadoJlist2;
-    public static JList<Tarea> TareasJlist;
     public static DefaultListModel<Soldado> modelo;
-    public static DefaultListModel<Tarea> modelo2;
     private JButton botoncrear, botonleer, botonactualizar, botoneliminar, botongestiormision;
-    public static JPanel panelCentral, panelCrearsoldado, panelactualizar, panelelimiar, gestionarmisionesPrincipal, panelIzquierdo, panelRegañar, panelleer;
+    public static JPanel panelCentral, panelCrearsoldado, panelactualizar, panelelimiar, gestionarmisionesPrincipal, panelIzquierdo, panelRegañar, panelleer, panelAsignarMision;
     public static JLabel Nombreactualizar,labelNombre2;
-    public static JTextField nombredelsoldado, IDdelsoldado, TextobuscarID, BuscarEliminar, IDRegañador,IDRegañado;
+    public static JTextField nombredelsoldado, IDdelsoldado, TextobuscarID, BuscarEliminar, IDRegañador,IDRegañado, IDAsignador;
     public static JButton bombon, buscarID,boton_asignarmision, boton_reportarestado, boton_realizarregaño, botonRegañar, volvercentral, volvercentral2;
     public static ButtonGroup  grupoRangos;
     public static JRadioButton botonrango1, botonrango2, botonrango3, botonrango4;
@@ -483,13 +478,59 @@ public class Visual extends JFrame {
         boton_realizarregaño.setBounds(300, 350, 200, 50);   
 
 
-        boton_asignarmision.addActionListener(e -> funcionGestionarMisiones());
+        boton_asignarmision.addActionListener(e -> cambiarpanelAsignarmisiones());
         gestionarmisionesPrincipal.add(tituloGestionarMisiones);
         gestionarmisionesPrincipal.add(boton_asignarmision);
         gestionarmisionesPrincipal.add(boton_reportarestado);
         gestionarmisionesPrincipal.add(boton_realizarregaño);
         boton_realizarregaño.addActionListener(e -> cambiarpanelregañar());
         boton_reportarestado.addActionListener(e -> reportarEstado());
+
+        ///////////////////////////PANEL GESTIONAR MISIONES - ASIGNAR MISION////////////////////////////////////////
+        panelAsignarMision = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo6.jpg");
+        panelAsignarMision.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(Color.BLACK),  // Color del borde
+            "Gestionar Misiones",                       // Título del borde
+            TitledBorder.LEFT,                           // Alineación del título
+            TitledBorder.TOP,                            // Ubicación del título
+            new Font("Arial", Font.BOLD, 16),            // Fuente del título
+            Color.BLACK                                 // Color del título
+        ));
+        panelAsignarMision.setLayout(null);
+
+        JLabel tituloAsignarMision = new JLabel("SISTEMA ASIGNACION DE MISIONES");
+        tituloAsignarMision.setFont(new Font("Arial", Font.BOLD, 30));
+        tituloAsignarMision.setForeground(Color.WHITE);
+        tituloAsignarMision.setBounds(350, 0, 1100, 100);
+
+        JLabel labelAsignarMision = new JLabel("Introduzca el ID del soldado al que se le asignará una misión:");
+        labelAsignarMision.setFont(new Font("Arial", Font.BOLD, 20));
+        labelAsignarMision.setForeground(Color.WHITE);
+        labelAsignarMision.setBounds(50, 200, 500, 50);
+
+        IDAsignador = new JTextField();
+        IDAsignador.setFont(new Font("Arial", Font.BOLD, 40));
+        IDAsignador.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        IDAsignador.setBounds(50, 250, 500, 50);
+
+
+        JButton botonAsignarMision = new JButton("Asignar Mision");
+        botonAsignarMision.setIcon(icono);
+        botonAsignarMision.setHorizontalTextPosition(SwingConstants.CENTER);
+        botonAsignarMision.setVerticalTextPosition(SwingConstants.CENTER);
+        botonAsignarMision.setContentAreaFilled(false);
+        botonAsignarMision.setFocusPainted(false);
+        botonAsignarMision.setFont(new Font("Bebas Neue", Font.BOLD, 20));
+        botonAsignarMision.setForeground(gris);
+        botonAsignarMision.setBounds(50, 500, 200, 50);
+        botonAsignarMision.addActionListener(e -> funcionAsignarMision());
+
+        panelAsignarMision.add(tituloAsignarMision);
+        panelAsignarMision.add(labelAsignarMision);
+        panelAsignarMision.add(IDAsignador);
+        panelAsignarMision.add(botonAsignarMision);
+
+
 
         ///////////////////////////PANEL GESTIONAR MISIONES - REGAÑAR////////////////////////////////////////
         panelRegañar = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo6.jpg");
@@ -556,14 +597,17 @@ public class Visual extends JFrame {
         mainPanel.add(gestionarmisionesPrincipal, "mainpanel2");
         mainPanel.add(panelRegañar, "panelRegañar");
         mainPanel.add(panelleer, "panelleer");
+        mainPanel.add(panelAsignarMision, "panelAsignarMision");
         frame.setVisible(true);        
         panelCentral.setVisible(true);
         panelCrearsoldado.setVisible(false);
         panelactualizar.setVisible(false);
         panelelimiar.setVisible(false);
         gestionarmisionesPrincipal.setVisible(false);
+        panelAsignarMision.setVisible(false);
         panelRegañar.setVisible(false);
         panelleer.setVisible(false);
+
     }
       
     
@@ -664,10 +708,12 @@ public class Visual extends JFrame {
         gestionarmisionesPrincipal.setVisible(true);
     }
 
-    public static void funcionGestionarMisiones() {
-        JOptionPane.showMessageDialog(gestionarmisionesPrincipal, "FUNCION NO DISPONIBLE POR CREACION ERRONEA DE LISTA :C .", "NO FUNCIONAL", JOptionPane.ERROR_MESSAGE);
+    public static void cambiarpanelAsignarmisiones() {
+        panelAsignarMision.setVisible(true);
+        gestionarmisionesPrincipal.setVisible(false);
+        
+    }   
 
-    }     
     public static void cambiarpanelregañar() {
         panelRegañar.setVisible(true);
         gestionarmisionesPrincipal.setVisible(false);
@@ -675,6 +721,36 @@ public class Visual extends JFrame {
         IDRegañado.setText("");
 
     }
+    
+    public static void funcionAsignarMision() {
+        try {
+            String IDAsignadorText = IDAsignador.getText().trim();
+            if (IDAsignadorText.isEmpty()) {
+                JOptionPane.showMessageDialog(Visual.panelAsignarMision,
+                    "Debe ingresar el ID del soldado que asignará la misión.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+    
+            int idAsignadorNumerico = Integer.parseInt(IDAsignadorText);
+            Soldado soldadoAsignador = App.buscarSoldadoPorID(idAsignadorNumerico);
+    
+            if (soldadoAsignador == null) return;
+    
+            App.asignarMisionGeneral(soldadoAsignador);
+    
+            IDAsignador.setText("");
+            cambiarpanelcentral(); // Si esta acción es necesaria
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(Visual.panelAsignarMision,
+                "El ID debe ser un número válido.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+
 
     public static void funcionRegañar(int opcion) {
         try {
@@ -710,6 +786,7 @@ public class Visual extends JFrame {
             System.err.println("Error: panelIzquierdo no está inicializado.");
         }
     }
+
     public static void cambiarpanelcentral() {
         panelIzquierdo.setVisible(true);
         panelCentral.setVisible(true);
@@ -718,18 +795,35 @@ public class Visual extends JFrame {
         panelactualizar.setVisible(false);
         panelelimiar.setVisible(false);
         gestionarmisionesPrincipal.setVisible(false);
+        panelAsignarMision.setVisible(false);
         panelRegañar.setVisible(false);
 
 
     }
+
     public static void panelIzquierdo() {
         panelleer.remove(panelIzquierdo);
         frame.add(panelIzquierdo, BorderLayout.WEST);
     }
 
     public static void reportarEstado() {
-        JOptionPane.showMessageDialog(gestionarmisionesPrincipal, "FUNCION NO DISPONIBLE POR CREACION ERRONEA DE LISTA :C .", "NO FUNCIONAL", JOptionPane.ERROR_MESSAGE);
+        try {
+            String ID = JOptionPane.showInputDialog(gestionarmisionesPrincipal, 
+                "Introduzca el ID del soldado a reportar:");
+            if (ID == null) return;
     
+            int IDreportar = Integer.parseInt(ID);
+            Soldado soldado = App.buscarSoldadoPorID(IDreportar);
+    
+            if (soldado != null) {
+                App.reportarEstadoGeneral(soldado);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(gestionarmisionesPrincipal,
+                "El ID debe ser un número válido.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
 
