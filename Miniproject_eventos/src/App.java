@@ -1,8 +1,8 @@
 import java.util.Scanner;
 import java.awt.*;
-
+import javax.sound.sampled.*;
 import javax.swing.*;
-
+import java.io.File;
 import Operaciones_Militares.OperacionesMilitares;
 import Soldados.Capitan;
 import Soldados.Coronel;
@@ -22,6 +22,12 @@ public class App extends JFrame {
 
     public static void main(String[] args) throws Exception {
         new Visual().sisas(soldados);
+        reproducirMusica();
+        try {
+            Thread.sleep(10000); // Mantén el programa corriendo durante 10 segundos
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
         
 
@@ -504,6 +510,23 @@ public class App extends JFrame {
     }
     public void reportarEstado() {
     }
+
+
+
+////////////////////////////////////////////// METODO REPRODUCIR MUSICA //////////////////////////////////////////////
+
+    public static void reproducirMusica() {
+        try {
+            File archivo = new File("Miniproject_eventos\\src\\Sounds\\Soundtrack.wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(archivo));
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+
 
    
