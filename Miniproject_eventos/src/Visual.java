@@ -1,7 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 import Soldado_Principal.Soldado;
+import Soldados.Capitan;
+import Soldados.Coronel;
+import Soldados.SoldadoRaso;
+import Soldados.Teniente;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,14 +20,16 @@ public class Visual extends JFrame {
     public static JList<Soldado> SoldadoJlist, SoldadoJlist2;
     public static DefaultListModel<Soldado> modelo;
     private JButton botoncrear, botonleer, botonactualizar, botoneliminar, botongestiormision;
-    public static JPanel panelCentral, panelCrearsoldado, panelactualizar, panelelimiar, gestionarmisionesPrincipal, panelIzquierdo, panelRegañar, panelleer, panelAsignarMision;
+    public static JPanel panelCentral, panelCrearsoldado, panelactualizar, paneleliminar, gestionarmisionesPrincipal, panelIzquierdo, panelRegañar, panelleer, panelAsignarMision;
     public static JLabel Nombreactualizar,labelNombre2;
     public static JTextField nombredelsoldado, IDdelsoldado, TextobuscarID, BuscarEliminar, IDRegañador,IDRegañado, IDAsignador;
     public static JButton bombon, buscarID,boton_asignarmision, boton_reportarestado, boton_realizarregaño, botonRegañar, volvercentral, volvercentral2;
     public static ButtonGroup  grupoRangos;
+    public static JTable tablaSoldados;
+    public static DefaultTableModel modeloTabla;
     public static JRadioButton botonrango1, botonrango2, botonrango3, botonrango4;
     public static JScrollPane scroll, scroll1;
-
+    
     public void sisas(List<Soldado> soldados) {
         Color gris = new Color(53, 53, 53);
 
@@ -86,10 +97,10 @@ public class Visual extends JFrame {
         
         /////////////////// Panel Central ///////////////////////////////////////////
         
-        
-        panelCentral = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo1.jpg");
-        panelCentral.setLayout(null);
-        panelCentral.setBorder(BorderFactory.createTitledBorder(
+        Visual.panelCentral = new JPanel();
+        Visual.panelCentral = agregarFondo("Miniproject_eventos\\src\\Images\\Fondo1.jpg");
+        Visual.panelCentral.setLayout(null);
+        Visual.panelCentral.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.WHITE),  // Color del borde
             "Menu Principal",                       // Título del borde
             TitledBorder.LEFT,                           // Alineación del título
@@ -163,12 +174,12 @@ public class Visual extends JFrame {
         botongestiormision.setBounds(925, 500, 225, 51);
 
 
-        panelCentral.add(labelNombre_1);
-        panelCentral.add(botoncrear);
-        panelCentral.add(botonleer);
-        panelCentral.add(botonactualizar);
-        panelCentral.add(botoneliminar);
-        panelCentral.add(botongestiormision);
+        Visual.panelCentral.add(labelNombre_1);
+        Visual.panelCentral.add(botoncrear);
+        Visual.panelCentral.add(botonleer);
+        Visual.panelCentral.add(botonactualizar);
+        Visual.panelCentral.add(botoneliminar);
+        Visual.panelCentral.add(botongestiormision);
         
 
         
@@ -184,8 +195,9 @@ public class Visual extends JFrame {
         
         
         //////////////////////////// Panel Crear Soldado ///////////////////////////////////////////////
-        panelCrearsoldado = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo2.jpg");
-        panelCrearsoldado.setBorder(BorderFactory.createTitledBorder(
+        Visual.panelCrearsoldado = new JPanel();
+        Visual.panelCrearsoldado = agregarFondo("Miniproject_eventos\\src\\Images\\Fondo2.jpg");  // Asegúrate de que esto retorne un JPanel válido
+        Visual.panelCrearsoldado.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),  // Color del borde
             "Menu Crear Soldados",                       // Título del borde
             TitledBorder.LEFT,                           // Alineación del título
@@ -193,8 +205,9 @@ public class Visual extends JFrame {
             new Font("Arial", Font.BOLD, 16),            // Fuente del título
             Color.BLACK                                 // Color del título
         ));
-        panelCrearsoldado.setLayout(null);// Establecer layout nulo para el panel
-        panelCrearsoldado.setPreferredSize(new Dimension(1620,1080));
+        Visual.panelCrearsoldado.setLayout(null);// Establecer layout nulo para el panel
+        Visual.panelCrearsoldado.setPreferredSize(new Dimension(1620,1080));
+
         // Etiquetas y campos de texto
         JLabel labelNombre = new JLabel("SISTEMA CREACION DE SOLDADOS");
         labelNombre.setFont(new Font("Arial", Font.BOLD, 50));
@@ -279,69 +292,116 @@ public class Visual extends JFrame {
         bombon.addActionListener(e -> funcionarCrearsoldado());
 
         // Agrega todos los componentes al panel principal
-        panelCrearsoldado.add(labelNombre);
-        panelCrearsoldado.add(etiquetaNombre);
-        panelCrearsoldado.add(nombredelsoldado);
-        panelCrearsoldado.add(etiquetaID);
-        panelCrearsoldado.add(IDdelsoldado);
-        panelCrearsoldado.add(etiquetaRango);
-        panelCrearsoldado.add(botonrango1);
-        panelCrearsoldado.add(botonrango2);
-        panelCrearsoldado.add(botonrango3);
-        panelCrearsoldado.add(botonrango4);
-        panelCrearsoldado.add(bombon); // El botón directamente al panel principal
+        Visual.panelCrearsoldado.add(labelNombre);
+        Visual.panelCrearsoldado.add(etiquetaNombre);
+        Visual.panelCrearsoldado.add(nombredelsoldado);
+        Visual.panelCrearsoldado.add(etiquetaID);
+        Visual.panelCrearsoldado.add(IDdelsoldado);
+        Visual.panelCrearsoldado.add(etiquetaRango);
+        Visual.panelCrearsoldado.add(botonrango1);
+        Visual.panelCrearsoldado.add(botonrango2);
+        Visual.panelCrearsoldado.add(botonrango3);
+        Visual.panelCrearsoldado.add(botonrango4);
+        Visual.panelCrearsoldado.add(bombon); // El botón directamente al panel principal
 
-        
-
-
-    /////////////////////////////////////////////// Panel leer SOLDADO/////////////////////////////////////////////// 
-
-        panelleer = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo Lectura.jpg");
-        panelleer.setBorder(BorderFactory.createTitledBorder(
+                
+        /////////////////////////////////////////////// Panel leer SOLDADO /////////////////////////////////////////////// 
+        // Crear el panel y asignar fondo
+        Visual.panelleer = agregarFondo("Miniproject_eventos\\src\\Images\\Fondo Lectura.jpg");  // Asegúrate de que esto retorne un JPanel válido
+        Visual.panelleer.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),  // Color del borde
-            "Menu Leer Soldados",                       // Título del borde
-            TitledBorder.LEFT,                           // Alineación del título
-            TitledBorder.TOP,                            // Ubicación del título
-            new Font("Arial", Font.BOLD, 16),            // Fuente del título
-            Color.BLACK                                 // Color del título
+            "Menu Leer Soldados",                         // Título del borde
+            TitledBorder.LEFT,                            // Alineación del título
+            TitledBorder.TOP,                             // Ubicación del título
+            new Font("Arial", Font.BOLD, 16),             // Fuente del título
+            Color.BLACK                                   // Color del título
         ));
-        panelleer.setLayout(null);
+        Visual.panelleer.setLayout(null);
+
+        // Etiqueta del título del panel
         JLabel labelNombre3 = new JLabel("SISTEMA LECTURA DE SOLDADOS");
         labelNombre3.setFont(new Font("Arial", Font.BOLD, 40));
         labelNombre3.setForeground(gris);
-        labelNombre3.setBounds(450,0,1200, 100);
-        panelleer.add(labelNombre3);
+        labelNombre3.setBounds(450, 0, 1200, 100);
+        Visual.panelleer.add(labelNombre3);
+
+        String[] columnas = {"ID", "Nombre", "Rango", "Unidad", "Soldados Bajo Mando", "Estrategia Militar"};
+        modeloTabla = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace que todas las celdas no sean editables
+            }
+        };
+
+
+        // Crear la tabla con el modelo y personalizarla
+        tablaSoldados = new JTable(modeloTabla);
+        tablaSoldados.setFont(new Font("Arial", Font.BOLD, 15));
+        tablaSoldados.setRowHeight(20);
+        tablaSoldados.getTableHeader().setReorderingAllowed(false); // Deshabilitar movimiento de columnas
+
+
+
         
-        SoldadoJlist2 = new JList<>(modelo);
-        JScrollPane scroll1 = new JScrollPane(SoldadoJlist2);
-        Font font2 = new Font("Arial", Font.BOLD, 25);
-        SoldadoJlist2.setFont(font2);
-        SoldadoJlist2.setForeground(Color.WHITE);
-        SoldadoJlist2.setBackground(new Color(53, 53, 53));
-        SoldadoJlist2.setBorder(null);
-        scroll1.setBounds(50, 80, 1440, 630);
-        scroll1.setBorder(BorderFactory.createEmptyBorder());
 
-        panelleer.add(scroll1);
+        // Personalizar el encabezado de la tabla también
+        tablaSoldados.getTableHeader().setFont(new Font("Arial", Font.BOLD, 22)); // Encabezado en negrilla
+        tablaSoldados.getTableHeader().setReorderingAllowed(false); // Evitar mover las columnas
+
+        // Crear un renderizador personalizado para el contenido
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setFont(new Font("Arial", Font.BOLD, 20)); // Fuente negrilla para las celdas
+        renderer.setHorizontalAlignment(SwingConstants.CENTER); // Centrar el contenido si lo deseas
+        tablaSoldados.setDefaultRenderer(Object.class, renderer);
 
 
+
+        // Llenar la tabla con los datos de los soldados
+        for (Soldado s : App.soldados) {
+            if (s instanceof Teniente) {
+                Teniente t = (Teniente) s;
+                modeloTabla.addRow(new Object[]{s.getID(), s.getNombresoldado(), s.rango, t.getUnidad(), "NO APLICA", "NO APLICA"});
+            } else if (s instanceof Capitan) {
+                Capitan c = (Capitan) s;
+                modeloTabla.addRow(new Object[]{s.getID(), s.getNombresoldado(), s.rango, "NO APLICA", c.getCantidadSoldadosBajoSuMando(), "NO APLICA"});
+            } else if (s instanceof Coronel) {
+                Coronel c = (Coronel) s;
+                modeloTabla.addRow(new Object[]{s.getID(), s.getNombresoldado(), s.rango, "NO APLICA", "NO APLICA", c.getEstrategiaMilitar()});
+            } else {
+                modeloTabla.addRow(new Object[]{s.getID(), s.getNombresoldado(), s.rango, "NO APLICA", "NO APLICA", "NO APLICA"});
+            }
+        }
+
+        // Agregar la tabla a un JScrollPane
+        JScrollPane scrollPane = new JScrollPane(tablaSoldados);
+        scrollPane.setBounds(50, 80, 1440, 630);
+        Visual.panelleer.add(scrollPane);
+
+        // Botón "Volver"
         volvercentral2 = new JButton("Volver");
-        volvercentral2.setIcon(icono); // Establece la imagen en el botón
-        volvercentral2.setHorizontalTextPosition(SwingConstants.CENTER); // Texto centrado horizontalmente
-        volvercentral2.setVerticalTextPosition(SwingConstants.CENTER);   // Texto centrado verticalmente
-        volvercentral2.setContentAreaFilled(false); // Hace transparente el área de contenido
-        volvercentral2.setFocusPainted(false); // Elimina el enfoque visual del botón
+        volvercentral2.setIcon(icono); // Asegúrate de tener una ruta válida para el icono
+        volvercentral2.setHorizontalTextPosition(SwingConstants.CENTER);
+        volvercentral2.setVerticalTextPosition(SwingConstants.CENTER);
+        volvercentral2.setContentAreaFilled(false);
+        volvercentral2.setFocusPainted(false);
         volvercentral2.setFont(new Font("Bebas Neue", Font.BOLD, 20));
-        volvercentral2.setForeground(gris); // Color del texto
+        volvercentral2.setForeground(gris);
         volvercentral2.setBounds(690, 720, 200, 50);
-        panelleer.add(volvercentral2);
+        Visual.panelleer.add(volvercentral2);
+
+        // Acción del botón "Volver"
         volvercentral2.addActionListener(e -> cambiarpanelcentral());
+
+        // Actualizar el panel
+        Visual.panelleer.revalidate();
+        Visual.panelleer.repaint();
 
 
         ////////////////////////////////////////// Panel ACTUALIZAR SOLDADO/////////////////////////////////////////////// 
 
-        panelactualizar = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo3.jpg");
-        panelactualizar.setBorder(BorderFactory.createTitledBorder(
+        Visual.panelactualizar = new JPanel();
+        Visual.panelactualizar = agregarFondo("Miniproject_eventos\\src\\Images\\Fondo3.jpg");
+        Visual.panelactualizar.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),  // Color del borde
             "Actualizar Soldados",                       // Título del borde
             TitledBorder.LEFT,                           // Alineación del título
@@ -349,7 +409,7 @@ public class Visual extends JFrame {
             new Font("Arial", Font.BOLD, 16),            // Fuente del título
             Color.BLACK                                 // Color del título
         ));
-        panelactualizar.setLayout(null);
+        Visual.panelactualizar.setLayout(null);
         labelNombre2 = new JLabel("SISTEMA ACTUALIZACION DE SOLDADOS");
         labelNombre2.setFont(new Font("Arial", Font.BOLD, 40));
         labelNombre2.setBounds(220, 0, 1200, 100);
@@ -376,25 +436,26 @@ public class Visual extends JFrame {
         buscarID.setBounds(50, 300, 300, 50);
         
         buscarID.addActionListener(e -> funcionActualizar());
-        panelactualizar.add(labelNombre2);
-        panelactualizar.add(Nombreactualizar);
-        panelactualizar.add(TextobuscarID);
-        panelactualizar.add(buscarID);
+        Visual.panelactualizar.add(labelNombre2);
+        Visual.panelactualizar.add(Nombreactualizar);
+        Visual.panelactualizar.add(TextobuscarID);
+        Visual.panelactualizar.add(buscarID);
         
 
 
-        // PANEL ELIMINAR SOLDADO///////////////////////////////////////////////
+        ///////////////////////////////////// PANEL ELIMINAR SOLDADO///////////////////////////////////////////////
 
-        panelelimiar = new PanelConFondo("Miniproject_eventos/src/Images/Fondo4.jpg");
-        panelelimiar.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(Color.BLACK),  // Color del borde
+        Visual.paneleliminar = new JPanel();
+        Visual.paneleliminar = agregarFondo("Miniproject_eventos\\src\\Images\\Fondo4.jpg");
+        Visual.paneleliminar.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(Color.WHITE),  // Color del borde
             "Eliminar Soldados",                       // Título del borde
             TitledBorder.LEFT,                           // Alineación del título
             TitledBorder.TOP,                            // Ubicación del título
             new Font("Arial", Font.BOLD, 16),            // Fuente del título
-            Color.BLACK                                 // Color del título
+            Color.WHITE                                 // Color del título
         ));
-        panelelimiar.setLayout(null);
+        Visual.paneleliminar.setLayout(null);
 
         JLabel Etiqueta_eliminar = new JLabel("SISTEMA ELIMINACION DE SOLDADOS");
         Etiqueta_eliminar.setFont(new Font("Arial", Font.BOLD, 30));
@@ -425,15 +486,17 @@ public class Visual extends JFrame {
         botonEliminarSoldado.addActionListener(e -> funcionEliminar());
 
 
-        panelelimiar.add(Etiqueta_eliminar);
-        panelelimiar.add(IDBuscarEliminar);
-        panelelimiar.add(BuscarEliminar);
-        panelelimiar.add(botonEliminarSoldado);    
+        Visual.paneleliminar.add(Etiqueta_eliminar);
+        Visual.paneleliminar.add(IDBuscarEliminar);
+        Visual.paneleliminar.add(BuscarEliminar);
+        Visual.paneleliminar.add(botonEliminarSoldado);    
         
 
         /////////////////////////// PANEL GESTIONAR MISIONES //////////////////////////////////////////
-        gestionarmisionesPrincipal = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo5.jpg");
-        gestionarmisionesPrincipal.setBorder(BorderFactory.createTitledBorder(
+        
+        Visual.gestionarmisionesPrincipal = new JPanel();
+        Visual.gestionarmisionesPrincipal = agregarFondo("Miniproject_eventos\\src\\Images\\Fondo5.jpg");
+        Visual.gestionarmisionesPrincipal.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),  // Color del borde
             "Gestionar Misiones",                       // Título del borde
             TitledBorder.LEFT,                           // Alineación del título
@@ -441,7 +504,7 @@ public class Visual extends JFrame {
             new Font("Arial", Font.BOLD, 16),            // Fuente del título
             Color.BLACK                                 // Color del título
         ));
-        gestionarmisionesPrincipal.setLayout(null);
+        Visual.gestionarmisionesPrincipal.setLayout(null);
 
         JLabel tituloGestionarMisiones = new JLabel("SISTEMA GESTION DE MISIONES");
         tituloGestionarMisiones.setFont(new Font("Arial", Font.BOLD, 30));
@@ -479,16 +542,18 @@ public class Visual extends JFrame {
 
 
         boton_asignarmision.addActionListener(e -> cambiarpanelAsignarmisiones());
-        gestionarmisionesPrincipal.add(tituloGestionarMisiones);
-        gestionarmisionesPrincipal.add(boton_asignarmision);
-        gestionarmisionesPrincipal.add(boton_reportarestado);
-        gestionarmisionesPrincipal.add(boton_realizarregaño);
+        Visual.gestionarmisionesPrincipal.add(tituloGestionarMisiones);
+        Visual.gestionarmisionesPrincipal.add(boton_asignarmision);
+        Visual.gestionarmisionesPrincipal.add(boton_reportarestado);
+        Visual.gestionarmisionesPrincipal.add(boton_realizarregaño);
         boton_realizarregaño.addActionListener(e -> cambiarpanelregañar());
         boton_reportarestado.addActionListener(e -> reportarEstado());
 
         ///////////////////////////PANEL GESTIONAR MISIONES - ASIGNAR MISION////////////////////////////////////////
-        panelAsignarMision = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo6.jpg");
-        panelAsignarMision.setBorder(BorderFactory.createTitledBorder(
+        
+        Visual.panelAsignarMision = new JPanel();
+        Visual.panelAsignarMision = agregarFondo("Miniproject_eventos\\src\\Images\\Fondo5.jpg");
+        Visual.panelAsignarMision.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),  // Color del borde
             "Gestionar Misiones",                       // Título del borde
             TitledBorder.LEFT,                           // Alineación del título
@@ -496,7 +561,7 @@ public class Visual extends JFrame {
             new Font("Arial", Font.BOLD, 16),            // Fuente del título
             Color.BLACK                                 // Color del título
         ));
-        panelAsignarMision.setLayout(null);
+        Visual.panelAsignarMision.setLayout(null);
 
         JLabel tituloAsignarMision = new JLabel("SISTEMA ASIGNACION DE MISIONES");
         tituloAsignarMision.setFont(new Font("Arial", Font.BOLD, 30));
@@ -525,23 +590,26 @@ public class Visual extends JFrame {
         botonAsignarMision.setBounds(50, 500, 200, 50);
         botonAsignarMision.addActionListener(e -> funcionAsignarMision());
 
-        panelAsignarMision.add(tituloAsignarMision);
-        panelAsignarMision.add(labelAsignarMision);
-        panelAsignarMision.add(IDAsignador);
-        panelAsignarMision.add(botonAsignarMision);
+        Visual.panelAsignarMision.add(tituloAsignarMision);
+        Visual.panelAsignarMision.add(labelAsignarMision);
+        Visual.panelAsignarMision.add(IDAsignador);
+        Visual.panelAsignarMision.add(botonAsignarMision);
 
 
 
         ///////////////////////////PANEL GESTIONAR MISIONES - REGAÑAR////////////////////////////////////////
-        panelRegañar = new PanelConFondo("Miniproject_eventos\\src\\Images\\Fondo6.jpg");
-        panelRegañar.setBorder(BorderFactory.createTitledBorder(
+        
+        Visual.panelRegañar = new JPanel();
+        Visual.panelRegañar = agregarFondo("Miniproject_eventos\\src\\Images\\Fondo6.jpg");
+        Visual.panelRegañar.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),  // Color del borde
             "Gestionar Misiones",                       // Título del borde
             TitledBorder.LEFT,                           // Alineación del título
             TitledBorder.TOP,                            // Ubicación del título
             new Font("Arial", Font.BOLD, 16),            // Fuente del título
             Color.BLACK                                 // Color del título
-        ));    
+        ));  
+        Visual.panelRegañar.setLayout(null);  
 
         JLabel tituloRegañar = new JLabel("SISTEMA REGAÑO DE SOLDADOS:");
         tituloRegañar.setFont(new Font("Arial", Font.BOLD, 30));
@@ -579,12 +647,12 @@ public class Visual extends JFrame {
         botonRegañar.setForeground(gris);
         botonRegañar.setBounds(50, 500, 200, 50);
         botonRegañar.addActionListener(e -> funcionRegañar(3));
-        panelRegañar.add(tituloRegañar);
-        panelRegañar.add(labelRegañar);
-        panelRegañar.add(IDRegañador);
-        panelRegañar.add(labelRegañar2);
-        panelRegañar.add(IDRegañado);
-        panelRegañar.add(botonRegañar);
+        Visual.panelRegañar.add(tituloRegañar);
+        Visual.panelRegañar.add(labelRegañar);
+        Visual.panelRegañar.add(IDRegañador);
+        Visual.panelRegañar.add(labelRegañar2);
+        Visual.panelRegañar.add(IDRegañado);
+        Visual.panelRegañar.add(botonRegañar);
 
 
 
@@ -593,7 +661,7 @@ public class Visual extends JFrame {
         mainPanel.add(panelCentral, "panelCentral");
         mainPanel.add(panelCrearsoldado, "panelCrearsoldado");
         mainPanel.add(panelactualizar, "panelactualizar");
-        mainPanel.add(panelelimiar, "panelelimiar");
+        mainPanel.add(paneleliminar, "panelelimiar");
         mainPanel.add(gestionarmisionesPrincipal, "mainpanel2");
         mainPanel.add(panelRegañar, "panelRegañar");
         mainPanel.add(panelleer, "panelleer");
@@ -602,7 +670,7 @@ public class Visual extends JFrame {
         panelCentral.setVisible(true);
         panelCrearsoldado.setVisible(false);
         panelactualizar.setVisible(false);
-        panelelimiar.setVisible(false);
+        paneleliminar.setVisible(false);
         gestionarmisionesPrincipal.setVisible(false);
         panelAsignarMision.setVisible(false);
         panelRegañar.setVisible(false);
@@ -611,20 +679,44 @@ public class Visual extends JFrame {
     }
       
     
-    
-
-    public static void actualizarLista() {
-        modelo.clear(); // Limpia el modelo antes de agregar nuevos elementos
-        for (Soldado soldado : App.soldados) {
-            modelo.addElement(soldado); // Añade los soldados al modelo
-        }
-        SoldadoJlist.setModel(modelo); // Actualiza el modelo de la JList
-    }
-
     public static void CambiarPanelCrearSoldado() {
         panelCentral.setVisible(false);
-        panelCrearsoldado.setVisible(true);
+        Visual.panelCrearsoldado.setVisible(true);
     }
+    
+    public static void actualizarLista() {
+        if (modeloTabla == null) {
+            System.err.println("Error: modeloTabla no está inicializado.");
+            return;
+        }
+    
+        // Limpia los datos existentes
+        modelo.clear();
+        modeloTabla.setRowCount(0);
+    
+        // Actualiza los datos
+        for (Soldado soldado : App.soldados) {
+            modelo.addElement(soldado);
+            if (soldado instanceof Teniente) {
+                Teniente t = (Teniente) soldado;
+                modeloTabla.addRow(new Object[]{soldado.getID(), soldado.getNombresoldado(), soldado.rango, t.getUnidad(), "NO APLICA", "NO APLICA"});
+            } else if (soldado instanceof Capitan) {
+                Capitan c = (Capitan) soldado;
+                modeloTabla.addRow(new Object[]{soldado.getID(), soldado.getNombresoldado(), soldado.rango, "NO APLICA", c.getCantidadSoldadosBajoSuMando(), "NO APLICA"});
+            } else if (soldado instanceof Coronel) {
+                Coronel c = (Coronel) soldado;
+                modeloTabla.addRow(new Object[]{soldado.getID(), soldado.getNombresoldado(), soldado.rango, "NO APLICA", "NO APLICA", c.getEstrategiaMilitar()});
+            } else {
+                modeloTabla.addRow(new Object[]{soldado.getID(), soldado.getNombresoldado(), soldado.rango, "NO APLICA", "NO APLICA", "NO APLICA"});
+            }
+        }
+    
+        // Actualiza el modelo de la lista
+        SoldadoJlist.setModel(modelo);
+    }
+    
+    
+
 
     public void funcionarCrearsoldado() {
         String nombreVisual = nombredelsoldado.getText();
@@ -636,6 +728,9 @@ public class Visual extends JFrame {
                 App.crearSoldado(nombreVisual, id, rango); // Llama al método modificado
                 JOptionPane.showMessageDialog(panelCrearsoldado, "Soldado creado exitosamente.");
                 actualizarLista(); // Actualizar la lista visual
+                // Limpiar los campos de texto
+                nombredelsoldado.setText(""); // Limpiar el campo nombre
+                IDdelsoldado.setText(""); // Limpiar el campo ID
                 panelCrearsoldado.setVisible(false);
                 panelCentral.setVisible(true);
             } catch (NumberFormatException e) {
@@ -649,6 +744,9 @@ public class Visual extends JFrame {
                 App.crearSoldado(nombreVisual, id, rango); // Llama al método modificado
                 JOptionPane.showMessageDialog(panelCrearsoldado, "Soldado creado exitosamente.");
                 actualizarLista(); // Actualizar la lista visual
+                // Limpiar los campos de texto
+                nombredelsoldado.setText(""); // Limpiar el campo nombre
+                IDdelsoldado.setText(""); // Limpiar el campo ID
                 panelCrearsoldado.setVisible(false);
                 panelCentral.setVisible(true);
             } catch (NumberFormatException e) {
@@ -661,26 +759,47 @@ public class Visual extends JFrame {
                 App.crearSoldado(nombreVisual, id, rango); // Llama al método modificado
                 JOptionPane.showMessageDialog(panelCrearsoldado, "Soldado creado exitosamente.");
                 actualizarLista(); // Actualizar la lista visual
+                // Limpiar los campos de texto
+                nombredelsoldado.setText(""); // Limpiar el campo nombre
+                IDdelsoldado.setText(""); // Limpiar el campo ID
                 panelCrearsoldado.setVisible(false);
                 panelCentral.setVisible(true);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(panelCrearsoldado, "ID y Rango deben ser números.", "Error", JOptionPane.ERROR_MESSAGE);
-                } 
-        else if (botonrango4.isSelected())
+            } 
+            else if (botonrango4.isSelected())
             try {
                 int rango = 4;
                 int id = Integer.parseInt(idVisual);
                 App.crearSoldado(nombreVisual, id, rango); // Llama al método modificado
                 JOptionPane.showMessageDialog(panelCrearsoldado, "Soldado creado exitosamente.");
                 actualizarLista(); // Actualizar la lista visual
+                // Limpiar los campos de texto
+                nombredelsoldado.setText(""); // Limpiar el campo nombre
+                IDdelsoldado.setText(""); // Limpiar el campo ID
                 panelCrearsoldado.setVisible(false);
                 panelCentral.setVisible(true);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(panelCrearsoldado, "ID y Rango deben ser números.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         
-    } 
+        
+    public static void cambiarpanelleer() {
+        if (panelIzquierdo != null) {
+            panelIzquierdo.setVisible(false);
+            panelCentral.setVisible(false);
+            panelleer.setVisible(true);
+            frame.repaint();                 // Redibuja la ventana para reflejar los cambios
+            frame.revalidate(); 
             
+        } else {
+            System.err.println("Error: panelIzquierdo no está inicializado.");
+        }
+    }
+            
+
+
     public static void cambiarpanelactializar() {
         TextobuscarID.setText("");
         panelCentral.setVisible(false);
@@ -691,17 +810,43 @@ public class Visual extends JFrame {
         String ID = TextobuscarID.getText();
         int IDbuscar = Integer.parseInt(ID);
         App.actSoldado(IDbuscar); // Llama al método modificado
+        
     }
+
+
     public static void cambiarpanelEliminar() {
         panelCentral.setVisible(false);
-        panelelimiar.setVisible(true);
+        paneleliminar.setVisible(true);
     }
 
     public static void funcionEliminar() {
-        String eliminar = BuscarEliminar.getText();
-        int IDaeliminar = Integer.parseInt(eliminar);
-        App.borrarSoldado(IDaeliminar); // Llama al método modificado
+        String eliminar = BuscarEliminar.getText().trim(); // Elimina los espacios al inicio y al final
+        
+        // Validar si el campo está vacío o contiene caracteres no numéricos
+        if (eliminar.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                int IDaeliminar = Integer.parseInt(eliminar); // Intentamos convertir el texto en un número
+                
+                // Verificar si el ID existe en la lista de soldados
+                boolean existe = App.soldadoExiste(IDaeliminar); // Asume que tienes este método en App
+    
+                if (existe) {
+                    // Llamar al método de eliminación del soldado
+                    App.borrarSoldado(IDaeliminar);
+                    JOptionPane.showMessageDialog(null, "Soldado eliminado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El ID ingresado no se encuentra en la lista.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                // Si ocurre una excepción al intentar convertir el texto, mostramos un mensaje de error
+                JOptionPane.showMessageDialog(null, "ID no válido. Asegúrese de ingresar un número.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
+    
+    
     
     public static void cambiarpanelGestionarMisiones() {
         panelCentral.setVisible(false);
@@ -774,18 +919,6 @@ public class Visual extends JFrame {
     }
     
     
-    public static void cambiarpanelleer() {
-        if (panelIzquierdo != null) {
-            panelIzquierdo.setVisible(false);
-            panelCentral.setVisible(false);
-            panelleer.setVisible(true);
-            frame.repaint();                 // Redibuja la ventana para reflejar los cambios
-            frame.revalidate(); 
-            
-        } else {
-            System.err.println("Error: panelIzquierdo no está inicializado.");
-        }
-    }
 
     public static void cambiarpanelcentral() {
         panelIzquierdo.setVisible(true);
@@ -793,7 +926,7 @@ public class Visual extends JFrame {
         panelleer.setVisible(false);
         panelCrearsoldado.setVisible(false);
         panelactualizar.setVisible(false);
-        panelelimiar.setVisible(false);
+        paneleliminar.setVisible(false);
         gestionarmisionesPrincipal.setVisible(false);
         panelAsignarMision.setVisible(false);
         panelRegañar.setVisible(false);
@@ -825,6 +958,32 @@ public class Visual extends JFrame {
                 JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public static JPanel agregarFondo(String rutaImagen) {
+        // Cargar la imagen de fondo
+        ImageIcon imagenFondo = new ImageIcon(rutaImagen);
+    
+        // Crear un panel con fondo
+        JPanel panelConFondo = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(imagenFondo.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+    
+        panelConFondo.setOpaque(true); // Hacer visible el fondo
+        panelConFondo.setLayout(null);  // Mantener el layout nulo para agregar componentes manualmente
+    
+        return panelConFondo;
+    }
+    
+
+    
+    
+    
+    
+    
 }
 
 

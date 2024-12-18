@@ -24,7 +24,7 @@ public class App extends JFrame {
         new Visual().sisas(soldados);
         reproducirMusica();
         try {
-            Thread.sleep(1000); // Mantén el programa corriendo durante 1 segundos
+            Thread.sleep(10000); // Mantén el programa corriendo durante 10 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -109,62 +109,72 @@ public class App extends JFrame {
     }
 
     ////////////////////////////////////////////////METODO ACTUALIZAR SOLDADO//////////////////////////////////////////////
-
-    public static void actSoldado(int id) {                    
+    public static void actSoldado(int id) {
         JLabel etiqueta_nuevoNombre = new JLabel("Introducir nuevo nombre: ");
         etiqueta_nuevoNombre.setFont(new Font("Arial", Font.BOLD, 30));
-
+    
         JTextField nuevoNombre_actualizar = new JTextField(5); // Campo de texto
         nuevoNombre_actualizar.setFont(new Font("Arial", Font.BOLD, 40));
-
+    
         JLabel etiqueta_nuevoRango = new JLabel("Introducir nuevo rango (1-4): ");
         etiqueta_nuevoRango.setFont(new Font("Arial", Font.BOLD, 30));
-
+    
         JTextField nuevoRango = new JTextField(5); // Campo de texto
         nuevoRango.setFont(new Font("Arial", Font.BOLD, 40));
-
-        JButton funcionar = new JButton("Actualizar Soldado");
+    
+        JButton funcionar = new JButton("Actualizar");
+        ImageIcon iconodelapp = new ImageIcon("Miniproject_eventos\\src\\Images\\Fondo_Botones.jpg"); // Carga la imagen del botón
+        funcionar.setIcon(iconodelapp); // Establece la imagen en el botón
+        funcionar.setHorizontalTextPosition(SwingConstants.CENTER); // Texto centrado horizontalmente
+        funcionar.setVerticalTextPosition(SwingConstants.CENTER);   // Texto centrado verticalmente
+        funcionar.setContentAreaFilled(false); // Hace transparente el área de contenido
+        funcionar.setFocusPainted(false); // Elimina el enfoque visual del botón
+        funcionar.setFont(new Font("Bebas Neue", Font.BOLD, 20));
+        funcionar.setForeground(new Color(53, 53, 53)); // Color del texto
+        funcionar.setBounds(50, 300, 500, 50);
         
         boolean encontrado = false;
-
+    
         for (Soldado soldado : soldados) {
             if (soldado.getID() == id) {
                 encontrado = true;                        
                 JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado encontrado: " + soldado.getNombresoldado());
-
-                
-                Visual.panelactualizar.removeAll();
-                // Limpiar el panel antes de agregar nuevos componentes
-
+    
+                Visual.panelactualizar.removeAll(); // Limpiar el panel antes de agregar nuevos componentes
+    
                 // Agregar nuevos componentes
                 etiqueta_nuevoNombre.setBounds(50, 50, 500, 50);
                 nuevoNombre_actualizar.setBounds(50, 100, 500, 50);
                 etiqueta_nuevoRango.setBounds(50, 200, 500, 50);
                 nuevoRango.setBounds(50, 250, 500, 50);
                 funcionar.setBounds(50, 350, 200, 50);
-
+    
                 Visual.panelactualizar.add(etiqueta_nuevoNombre);
                 Visual.panelactualizar.add(nuevoNombre_actualizar);
                 Visual.panelactualizar.add(etiqueta_nuevoRango);
                 Visual.panelactualizar.add(nuevoRango);
                 Visual.panelactualizar.add(funcionar);
-
-                //Actualizar el panel Visualmente
+    
+                // Actualizar el panel visualmente
                 Visual.panelactualizar.revalidate();
                 Visual.panelactualizar.repaint();
                 
                 funcionar.addActionListener(e -> {
                     String nuevo_nombre = nuevoNombre_actualizar.getText();
                     String nuevo_rango = nuevoRango.getText();
+                    JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado actualizado correctamente.");
                     try {
                         int rango = Integer.parseInt(nuevo_rango);
-                        soldado.setNombresoldado(nuevo_nombre); 
-                        solicitarDatosPorRango(soldado, rango); // Cambiado a 'soldado'
-                        JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado actualizado correctamente.");
-                        Visual.panelactualizar.removeAll();
+                        soldado.setNombresoldado(nuevo_nombre); // Actualiza el nombre del soldado
+                        solicitarDatosPorRango(soldado, rango); // Actualiza el rango y otros datos
+                        funcionar.setVisible(false);
+                        
+                        // Actualizar el panel después de la actualización
+                        Visual.panelactualizar.removeAll(); 
                         Visual.panelactualizar.revalidate();
                         Visual.panelactualizar.repaint();
-                        // Mostrar panel de actualización
+    
+                        // Mostrar panel de búsqueda
                         Visual.labelNombre2.setVisible(true);
                         Visual.Nombreactualizar.setVisible(true);
                         Visual.TextobuscarID.setVisible(true);
@@ -176,11 +186,13 @@ public class App extends JFrame {
                         
                         Visual.panelactualizar.revalidate();
                         Visual.panelactualizar.repaint();
+    
                         // Actualizar la lista de soldados visualmente
                         Visual.actualizarLista();
+                        
                         // Ocultar panel de actualización y mostrar el panel central
-                        Visual.panelactualizar.setVisible(false);
-                        Visual.panelCentral.setVisible(true);
+                        Visual.cambiarpanelcentral();
+
                     } catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(Visual.panelactualizar, "El rango debe ser un número válido.");
                     }
@@ -188,11 +200,12 @@ public class App extends JFrame {
                 break;
             }
         }
-
-    if (!encontrado) {
-        JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado no encontrado.");
+    
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(Visual.panelactualizar, "Soldado no encontrado.");
+        }
     }
-    }
+    
 
 
 
@@ -200,21 +213,19 @@ public class App extends JFrame {
 
     public static void borrarSoldado(int IDaeliminar) {
         
-        boolean encontrado = false;
+
         for (int i = 0; i < soldados.size(); i++) {
+
             if (soldados.get(i).getID() == IDaeliminar) {  
                 soldados.remove(i);
-                encontrado = true;
+
                 Visual.actualizarLista();
-                JOptionPane.showMessageDialog(Visual.panelelimiar, "Soldado eliminado corractamente.");
-                Visual.panelelimiar.setVisible(false);
+                Visual.paneleliminar.setVisible(false);
                 Visual.panelCentral.setVisible(true);
                 break;
             }
         }
-        if (!encontrado) {
-            System.out.println("ID invalido, vuelve a intentarlo \n ");
-        }
+
     }
 
 
@@ -511,6 +522,16 @@ public class App extends JFrame {
     public void reportarEstado() {
     }
 
+    public static boolean soldadoExiste(int id) {
+        // Suponiendo que los soldados están guardados en una lista llamada listaSoldados
+        for (Soldado soldado : soldados) {
+            if (soldado.getID() == id) {
+                return true; // El soldado con el ID existe
+            }
+        }
+        return false; // El soldado no se encuentra en la lista
+    }
+    
 
 
 ////////////////////////////////////////////// METODO REPRODUCIR MUSICA //////////////////////////////////////////////
